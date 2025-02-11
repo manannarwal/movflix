@@ -52,7 +52,7 @@ const Menu2 = () => {
         </p>
         <p className="mt-145 text-xl">
           <span className="-ml-3 flex  ">
-          <span className="">Made with</span> <GiLoveMystery className="mx-2 mt-1"/> <span>by   <a href="https://manannarwal.me" target="blank">Manan</a></span> 
+          <span className="">Made with</span> <GiLoveMystery className="mx-2 mt-1"/> <span>by   <a href="https://manannarwal.me" target="blank">Mana</a></span> 
           </span>
         </p>
       </div>
