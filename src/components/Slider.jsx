@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaRegStar } from "react-icons/fa";
 
@@ -9,7 +9,13 @@ const Slider = () => {
   const [movies, setMovies] = useState([]);
   const [logos, setLogos] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
   const navigate = useNavigate();
+
+  // Refs for dragging
+  const sliderRef = useRef(null);
+  const startXRef = useRef(0);
+  const draggingRef = useRef(false);
 
   // Fetch upcoming movies
   useEffect(() => {
@@ -17,94 +23,154 @@ const Slider = () => {
       try {
         const response = await fetch(MOVIE_API_URL);
         const data = await response.json();
-        setMovies(data.results.slice(0, 6)); // Get only 6 movies
+        const sliced = data.results.slice(0, 6); // Use only 6 movies
+        setMovies(sliced);
 
-        // Fetch logos for each movie
-        data.results.slice(0, 6).forEach((movie) => {
+        // For each movie, fetch its logo
+        sliced.forEach((movie) => {
           fetchMovieLogo(movie.id);
         });
       } catch (error) {
         console.error("Error fetching movies:", error);
       }
     };
-
     fetchMovies();
   }, []);
 
-  // Fetch logo for a specific movie
+  // Fetch movie logo for a given movie
   const fetchMovieLogo = async (movieId) => {
     try {
-      const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${API_KEY}`);
+      const response = await fetch(
+        `https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${API_KEY}`
+      );
       const data = await response.json();
-      
-      // Extract logo from API response
-      const logoPath = data.logos?.length > 0 ? data.logos[0].file_path : null;
-
-      // Store logo in state
+      const logoPath =
+        data.logos && data.logos.length > 0 ? data.logos[0].file_path : null;
       setLogos((prevLogos) => ({
         ...prevLogos,
-        [movieId]: logoPath ? `https://image.tmdb.org/t/p/original${logoPath}` : null
+        [movieId]: logoPath ? `https://image.tmdb.org/t/p/original${logoPath}` : null,
       }));
     } catch (error) {
       console.error(`Error fetching logo for movie ${movieId}:`, error);
     }
   };
 
-  // Auto-slide every 5 seconds
+  // Auto-slide every 5 seconds (only if not dragging)
   useEffect(() => {
     if (movies.length === 0) return;
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % movies.length);
+      if (!draggingRef.current) {
+        setCurrentIndex((prev) => (prev + 1) % movies.length);
+      }
     }, 5000);
-
     return () => clearInterval(interval);
   }, [movies]);
 
-  if (movies.length === 0) return <div>Loading...</div>;
+  // Handle mouse down: start drag
+  const handleMouseDown = (e) => {
+    draggingRef.current = true;
+    startXRef.current = e.clientX;
+  };
 
-  const currentMovie = movies[currentIndex];
+  // Handle mouse move: update drag offset in real time
+  const handleMouseMove = (e) => {
+    if (!draggingRef.current) return;
+    const delta = e.clientX - startXRef.current;
+    setDragOffset(delta);
+  };
+
+  // Handle mouse up: decide if we should move to next/previous slide based on drag threshold
+  const handleMouseUp = () => {
+    if (!draggingRef.current) return;
+    draggingRef.current = false;
+
+    // Determine slide width (each slide fills the slider container)
+    const sliderWidth = sliderRef.current ? sliderRef.current.clientWidth : 0;
+    const threshold = sliderWidth / 4; // adjust threshold as needed
+
+    if (dragOffset > threshold) {
+      // Dragged to right: move to previous slide
+      setCurrentIndex((prev) => (prev === 0 ? movies.length - 1 : prev - 1));
+    } else if (dragOffset < -threshold) {
+      // Dragged to left: move to next slide
+      setCurrentIndex((prev) => (prev + 1) % movies.length);
+    }
+    // Reset drag offset (snaps back)
+    setDragOffset(0);
+  };
+
+  // If movies have not loaded, show loading text
+  if (movies.length === 0)
+    return <div className="text-white text-center">Loading...</div>;
+
+  // Calculate slide width from container ref (if available)
+  const slideWidth = sliderRef.current ? sliderRef.current.clientWidth : 0;
+  // Compute the translateX value: start from current slide, then add the drag offset.
+  const translateX = -currentIndex * slideWidth + dragOffset;
 
   return (
-    <div className="relative w-[111rem] h-[30rem] ml-3.5 mt-2 rounded-2xl overflow-hidden">
-      {/* Background Image with Blur Effect */}
+    <div
+      className="relative w-full h-[30rem] ml-3.5 mt-2 rounded-2xl overflow-hidden select-none"
+      ref={sliderRef}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp} // in case mouse leaves the container during drag
+    >
+      {/* Slider container: flex row with all slides */}
       <div
-        className="absolute inset-0 bg-cover bg-center filter blur-lg scale-110"
-        style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original${currentMovie.backdrop_path})` }}
-      ></div>
-
-      {/* Content Overlay */}
-      <div className="absolute inset-0 bg-black/50 flex items-center px-20">
-        {/* Left Section: Movie Details */}
-        <div className="w-1/2 text-white space-y-3">
-          {/* Movie Logo or Title */}
-          {logos[currentMovie.id] ? (
-            <img src={logos[currentMovie.id]} alt={currentMovie.title} className="h-30" />
-          ) : (
-            <h1 className="text-4xl font-bold">{currentMovie.title}</h1>
-          )}
-
-          <p className="text-lg text-gray-300">
-            MOVIE • ☆ {currentMovie.vote_average?.toFixed(1) || "N/A"} • 📅 {currentMovie.release_date}
-          </p>
-          <p className="text-gray-400 line-clamp-3 w-[90%]">{currentMovie.overview}</p>
-
-          {/* Watch Now Button */}
-          <button
-            className="bg-zinc-800/50 mt-8 px-5 py-2 text-lg bg-opa font-semibold rounded-3xl font-sans hover:bg-[#303030] transition"
-            onClick={() => navigate(`/player/${currentMovie.id}`)}
-          >
-            ▶ Watch Now
-          </button>
-        </div>
-
-        {/* Right Section: Rotated Movie Poster */}
-        <div className="absolute right-20 top-10">
-          <img
-            src={`https://image.tmdb.org/t/p/w300${currentMovie.poster_path}`}
-            alt={currentMovie.title}
-            className="w-115 h-150 -mt-23 mr-15 shadow-lg transform rotate-[15deg]"
-          />
-        </div>
+        className={`flex h-full transition-transform duration-300 ease-out`}
+        style={{ transform: `translateX(${translateX}px)` }}
+      >
+        {movies.map((movie) => (
+          <div key={movie.id} className="w-full flex-shrink-0 relative">
+            {/* Each Slide */}
+            {/* Background Image with Blur */}
+            <div
+              className="absolute inset-0 bg-cover bg-center filter blur-lg scale-110"
+              style={{
+                backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
+              }}
+            ></div>
+            {/* Content Overlay */}
+            <div className="absolute inset-0 bg-black/50 flex items-center px-20">
+              {/* Left Section: Movie Details */}
+              <div className="w-1/2 text-white space-y-3">
+                {logos[movie.id] ? (
+                  <img
+                    src={logos[movie.id]}
+                    alt={movie.title}
+                    className="h-20"
+                  />
+                ) : (
+                  <h1 className="text-5xl font-bold">{movie.title}</h1>
+                )}
+                <p className="text-lg text-gray-300 flex items-center gap-2">
+                  MOVIE • <FaRegStar className="text-yellow-500" />{" "}
+                  {movie.vote_average?.toFixed(1) || "N/A"} • 📅{" "}
+                  {movie.release_date}
+                </p>
+                <p className="text-gray-400 line-clamp-3 w-[90%]">
+                  {movie.overview}
+                </p>
+                <button
+                  className="bg-zinc-800/70 mt-8 px-6 py-3 text-lg font-semibold rounded-3xl font-sans hover:bg-[#303030]/80 transition-all"
+                  onClick={() => navigate(`/player/${movie.id}`)}
+                >
+                  ▶ Watch Now
+                </button>
+              </div>
+              {/* Right Section: Rotated Movie Poster */}
+              <div className="absolute right-20 top-10">
+                <img
+                  src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                  alt={movie.title}
+                  className="w-64 h-auto shadow-lg transform rotate-[15deg] scale-110"
+                />
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
