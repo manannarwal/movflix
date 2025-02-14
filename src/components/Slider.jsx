@@ -110,7 +110,7 @@ const Slider = () => {
 
   return (
     <div
-      className="relative w-full h-[30rem] ml-3.5 mt-2 rounded-2xl overflow-hidden select-none"
+      className="relative w-full h-[30rem] ml-3.5 mr-3.5 mt-2 rounded-2xl overflow-hidden select-none"
       ref={sliderRef}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}

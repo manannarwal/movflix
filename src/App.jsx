@@ -8,7 +8,6 @@ import TvShow from "./pages/Tvshow";
 import LiveTv from "./pages/LiveTv";
 import Manga from "./pages/Manga";
 import Slider from "./components/Slider";
-import Foreground from "./components/Foreground";
 import Pop_Movie from "./components/Popular_Movie";
 import Toprated_Movie from "./components/Toprated_Movie";
 import Upcoming_Movies from "./components/Upcoming_Movies";
@@ -16,6 +15,7 @@ import Mov_Player from "./components/Mov_Player";
 import Tv_Player from "./components/Tv_Player";
 import Tvshowfetch from "./components/Tvshowfetch";
 import Search from "./components/Search";
+import Home from "./pages/Home";
 
 
 
@@ -36,12 +36,8 @@ const App = () => {
               <Route
                 path="/"
                 element={
-                  <div className="mr-3 ml-5 pt-1 flex flex-wrap gap-4 bg-[#121212] rounded-2xl pb-3 mb-3">
-                    <Slider />
-                    <Foreground />
-                    <Pop_Movie />
-                    <Toprated_Movie />
-                    <Upcoming_Movies />
+                  <div >
+                    <Home />
                   </div>
                 }
               />

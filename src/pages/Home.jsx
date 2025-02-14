@@ -1,9 +1,23 @@
-import React from 'react'
+import React from "react";
+import Slider from "../components/Slider";
+import Pop_Movie from "../components/Popular_Movie";
+import Toprated_Movie from "../components/Toprated_Movie";
+import Upcoming_Movies from "../components/Upcoming_Movies";
 
 const Home = () => {
   return (
-    <div></div>
-  )
-}
+    <div className="mr-3 ml-5 pt-1 flex flex-wrap gap-4 bg-[#121212] rounded-2xl pb-3 mb-3">
+      <Slider />
+      <div className="ml-3">
+      <span className="absolute underline text-2xl ml-1 mb-5">Popular Movies</span>
+        <Pop_Movie />
+      <span className="absolute underline text-2xl ml-1 mt-7 mb-5">Top Rated Movies</span>
+        <Toprated_Movie />
+      <span className="absolute underline text-2xl ml-1 mt-7 mb-5">Upcoming Movies</span>
+        <Upcoming_Movies />
+      </div>
+    </div>
+  );
+};
 
-export default Home
+export default Home;

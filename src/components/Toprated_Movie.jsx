@@ -24,7 +24,7 @@ const Toprated_Movie = () => {
   }, []);
   return (
     
-    <div className="ml-3 pt-22 flex flex-wrap gap-4">
+    <div className="pt-22 flex flex-wrap gap-4">
       {movies.map((movie) => (
         <div key={movie.id} onClick={() => navigate(`/player/${movie.id}`)}>
         <Card
