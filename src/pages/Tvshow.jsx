@@ -3,7 +3,7 @@ import Tvshowfetch from '../components/Tvshowfetch'
 
 const Tvshow = () => {
   return (
-    <div className="ml-6 mr-[.5vw] ">
+    <div className="ml-5 mr-[.5vw] max-md:-ml-9 max-md:mr-3 ">
       <Tvshowfetch />
     </div>
   )

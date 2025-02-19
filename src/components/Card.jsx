@@ -19,9 +19,9 @@ const Card = ({poster, title, rating, id}) => {
       <img 
           src={`https://image.tmdb.org/t/p/w500${poster}`}
           alt={title} onMouseEnter={scaleUp} onMouseLeave={scaleDown}
-          className={`w-41 h-60 object-cover rounded-lg `}
+          className="w-41 h-60 object-cover rounded-lg max-md:w-25 max-md:h-40"
         />
-        <div className="absolute top-2 right-2 flex items-center text-white font-semibold bg-black/50 px-2 py-1 rounded-md">
+        <div className="absolute top-2 right-2 flex items-center text-white font-semibold bg-black/50 px-2 py-1 rounded-md max-md:text-sm">
           <CiStar className="mr-1 text-amber-400" />
           <span>{rating?.toFixed(1)}</span>
 

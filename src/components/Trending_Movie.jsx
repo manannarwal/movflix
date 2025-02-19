@@ -24,7 +24,7 @@ const Trending_Movie = () => {
     }, []);
     return (
     
-        <div className=" pt-6 flex flex-wrap gap-4">
+        <div className=" pt-6 flex flex-wrap gap-4 justify-center items-center">
           {movies.map((movie) => (
             <div key={movie.id} onClick={() => navigate(`/player/${movie.id}`)}>
             <Card

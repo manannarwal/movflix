@@ -110,7 +110,7 @@ const Slider = () => {
 
   return (
     <div
-      className="relative w-full h-[30rem] ml-3.5 mr-3.5 mt-2 rounded-2xl overflow-hidden select-none"
+      className="relative w-full h-[30rem] ml-3.5 mr-3.5 mt-2 rounded-2xl overflow-hidden select-none max-md:h-[15rem]"
       ref={sliderRef}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
@@ -127,7 +127,7 @@ const Slider = () => {
             {/* Each Slide */}
             {/* Background Image with Blur */}
             <div
-              className="absolute inset-0 bg-cover bg-center filter blur-lg scale-110"
+              className="absolute inset-0 bg-cover bg-center filter blur-sm max-md:blur-none"
               style={{
                 backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
               }}
@@ -135,37 +135,37 @@ const Slider = () => {
             {/* Content Overlay */}
             <div className="absolute inset-0 bg-black/50 flex items-center px-20">
               {/* Left Section: Movie Details */}
-              <div className="w-1/2 text-white space-y-3">
+              <div className="w-1/2 text-white space-y-3 max-md:space-y-1 max-md:w-35 ">
                 {logos[movie.id] ? (
                   <img
                     src={logos[movie.id]}
                     alt={movie.title}
-                    className="h-20"
+                    className="h-20 max-md:h-15 max-md:-ml-15"
                   />
                 ) : (
-                  <h1 className="text-5xl font-bold">{movie.title}</h1>
+                  <h1 className="text-5xl font-bold max-md:text-xs">{movie.title}</h1>
                 )}
-                <p className="text-lg text-gray-300 flex items-center gap-2">
+                <p className="text-lg text-gray-300 flex items-center gap-2 max-md:text-xs max-md:-ml-15 max-md:w-100 max-md:gap-1">
                   MOVIE • <FaRegStar className="text-yellow-500" />{" "}
                   {movie.vote_average?.toFixed(1) || "N/A"} • 📅{" "}
                   {movie.release_date}
                 </p>
-                <p className="text-gray-400 line-clamp-3 w-[90%]">
+                <p className="text-gray-400 line-clamp-3 w-[90%] max-md:w-70 max-md:-ml-15 max-md:-mb-10 max-md:text-xs">
                   {movie.overview}
                 </p>
                 <button
-                  className="bg-zinc-800/70 mt-8 px-6 py-3 text-lg font-semibold rounded-3xl font-sans hover:bg-[#303030]/80 transition-all"
+                  className="bg-zinc-800/70 mt-8 px-6 py-3 text-lg font-semibold rounded-3xl font-sans hover:bg-[#303030]/80 transition-all max-md:mt-12 max-md:-ml-15 max-md:px-12 max-md:py-2 max-md:text-xs max-md:"
                   onClick={() => navigate(`/player/${movie.id}`)}
                 >
-                  ▶ Watch Now
+                  <p className="flex max-md:-ml-11 max-md:-mr-10">▶ Watch Now</p>
                 </button>
               </div>
               {/* Right Section: Rotated Movie Poster */}
-              <div className="absolute right-20 top-10">
+              <div className="absolute right-20 top-10 max-md:hidden w-100">
                 <img
                   src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
                   alt={movie.title}
-                  className="w-64 h-auto shadow-lg transform rotate-[15deg] scale-110"
+                  className="w-64 h-auto shadow-lg transform rotate-[15deg] scale-110 max-md:w-30 max-md:h-auto max-md:-mt-2 "
                 />
               </div>
             </div>

@@ -22,7 +22,7 @@ const Popular_Movie = () => {
     getMovie();
   }, []);
   return (
-    <div className="mr-1 mt-6 flex flex-wrap gap-4">
+    <div className="mr-1 mt-14 flex flex-wrap gap-4 justify-center items-center">
       {movies.map((movie) => (
         <div key={movie.id} onClick={() => navigate(`/player/${movie.id}`)}>
           <Card

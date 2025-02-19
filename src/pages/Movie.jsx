@@ -5,11 +5,11 @@ import Popular_Movie from '../components/Popular_Movie'
 
 const movie = () => {
   return (
-    <div className="ml-5 mr-3 pl-4 pb-3 bg-[#121212] rounded-2xl mb-3">
+    <div className="ml-5 mr-3 pb-3 bg-[#121212] rounded-2xl mb-3 max-md:-ml-10">
       <Movie_Fetch />
-      <p className='text-2xl mt-6 underline'>Trending Movies</p>
+      <p className='pl-4 text-2xl mt-6 underline'>Trending Movies</p>
       <Trending_Movie />
-      <p className='text-2xl mt-5 underline'>Popular Movies</p>
+      <p className='pl-4 text-2xl mt-5 underline'>Popular Movies</p>
       <Popular_Movie />
     </div>
   )

@@ -35,8 +35,8 @@ const Tvshowfetch = () => {
   
   return (
     <div className="mb-3.5">
-        <span className="fixed ml-3 mt-4   text-xl">{`${count}`} Results</span>
-      <div className="mr-0.5 pt-15 flex flex-wrap gap-4 bg-[#121212] rounded-2xl pl-2 pb-3">
+        <span className="absolute ml-3 mt-4   text-xl">{`${count}`} Results</span>
+      <div className="mr-0.5 pt-15 flex flex-wrap gap-4 bg-[#121212] rounded-2xl pb-3 justify-center items-center">
         {movies.map((movie) => (
                     <div key={movie.id} onClick={() => navigate(`/tv/${movie.id}`)}>
           <Card

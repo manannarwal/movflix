@@ -36,7 +36,7 @@ const Movie_Fetch = () => {
   return (
     <div className="">
       <span className="absolute ml-3 mt-3 text-xl">{`${count}`} Results</span>
-      <div className="mr-0.5 pt-15 flex flex-wrap gap-4 ">
+      <div className="mr-0.5 pt-15 flex flex-wrap gap-4 max-md:gap-3.5 justify-center items-center">
         {movies.map((movie) => (
           <div key={movie.id} onClick={() => navigate(`/player/${movie.id}`)}>
             <Card
