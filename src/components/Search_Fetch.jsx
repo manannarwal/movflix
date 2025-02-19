@@ -32,7 +32,7 @@ const Search_Fetch = ({ query, onResults, onSelect }) => {
 
   return (
     movies.length > 0 && (
-      <div className="absolute left-[35vw] w-[30vw] mt-13 bg-[#202020] rounded-xl shadow-lg p-3 text-white">
+      <div className="absolute left-[35vw] w-[30vw] mt-13 bg-[#202020] rounded-xl shadow-lg p-3 text-white max-md:fixed max-md:w-[53vw] max-md:mt-14 max-md:left-[29vw] max-md:text-sm">
         {movies.slice(0, 5).map((movie) => (
           <div
             key={movie.id}
@@ -56,7 +56,8 @@ const Search_Fetch = ({ query, onResults, onSelect }) => {
             <div>
               <p className="font-semibold">{movie.title || movie.name}</p>
               <p className="text-gray-400 text-sm">
-                {movie.media_type === "movie" ? "Movie" : "TV Show"} • ⭐ {movie.vote_average?.toFixed(1) || "N/A"}
+                {movie.media_type === "movie" ? "Movie" : "TV Show"} • ⭐{" "}
+                {movie.vote_average?.toFixed(1) || "N/A"}
               </p>
               <p className="text-gray-400 text-sm">
                 {movie.release_date || movie.first_air_date || "Unknown Date"}
@@ -70,4 +71,3 @@ const Search_Fetch = ({ query, onResults, onSelect }) => {
 };
 
 export default Search_Fetch;
-    

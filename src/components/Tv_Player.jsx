@@ -76,10 +76,10 @@ const Tv_Player = () => {
         </div>
 
         {/* Episode Dropdown */}
-        <div className="absolute my-213 mx-50 max-md:my-[60vh] max-md:flex max-md:ml-42">
-          <label className="text-white ml-5 mr-2 max-md:mt-2">Episode:</label>
+        <div className="absolute my-213 mx-50 max-md:my-[59.5vh] max-md:flex max-md:ml-[42vw]">
+          <label className="text-white ml-5 mr-2 max-md:mt-1.5">Episode:</label>
           <select
-            className="bg-gray-800 text-white p-2 rounded-xl"
+            className="bg-gray-800 text-white p-2 rounded-xl max-md:mt-1"
             value={selectedEpisode}
             onChange={(e) => setSelectedEpisode(Number(e.target.value))}
           >

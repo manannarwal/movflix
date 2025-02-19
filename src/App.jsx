@@ -7,13 +7,9 @@ import Anime from "./pages/Anime";
 import TvShow from "./pages/Tvshow";
 import LiveTv from "./pages/LiveTv";
 import Manga from "./pages/Manga";
-import Slider from "./components/Slider";
 import Pop_Movie from "./components/Popular_Movie";
-import Toprated_Movie from "./components/Toprated_Movie";
-import Upcoming_Movies from "./components/Upcoming_Movies";
 import Mov_Player from "./components/Mov_Player";
 import Tv_Player from "./components/Tv_Player";
-import Tvshowfetch from "./components/Tvshowfetch";
 import Search from "./components/Search";
 import Home from "./pages/Home";
 
@@ -54,6 +50,9 @@ const App = () => {
           </div>
         </div>
       </div>
+        <span className="hidden max-md:bottom-0 max-md:bg-[#121212] max-md:flex max-md:items-center max-md:justify-center max-md:rounded-xl max-md:mx-3 max-md:pt-2 max-md:mb-3">
+          Made with ❤️<span> by <a href="https://manannarwal.me" target="blank"> Manan</a></span>
+        </span>
     </Router>
   );
 };
