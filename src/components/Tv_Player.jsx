@@ -56,11 +56,11 @@ const Tv_Player = () => {
   };
 
   return (
-    <div className="bg-[#121212] pb-23 rounded-2xl mx-4 font-sans">
+    <div className="absolute bg-[#121212] pb-23 ml-5 rounded-2xl font-sans max-md:mx-0 max-md:-ml-[10vw] max-md:pb-[37vh] max-md:mr-3 max-md:text-sm max-md:relative" >
       {/* Season & Episode Selection */}
       <div className="flex gap-4 mb-2">
         {/* Season Dropdown */}
-        <div className="absolute my-213 mx-8">
+        <div className="absolute my-213 mx-8 max-md:my-[60vh] max-md:ml-3">
           <label className="text-white mr-2">Season:</label>
           <select
             className=" bg-gray-800 text-white p-2 rounded-xl"
@@ -76,8 +76,8 @@ const Tv_Player = () => {
         </div>
 
         {/* Episode Dropdown */}
-        <div className="absolute my-213 mx-50">
-          <label className="text-white ml-5 mr-2">Episode:</label>
+        <div className="absolute my-213 mx-50 max-md:my-[60vh] max-md:flex max-md:ml-42">
+          <label className="text-white ml-5 mr-2 max-md:mt-2">Episode:</label>
           <select
             className="bg-gray-800 text-white p-2 rounded-xl"
             value={selectedEpisode}
@@ -92,10 +92,10 @@ const Tv_Player = () => {
         </div>
       </div>
 
-      <div className="absolute  mx-390">
-        <label className="absolute my-213 text-white">Server:</label>
+      <div className="absolute  mx-390 max-md:mx-0">
+        <label className="absolute my-213 text-white max-md:my-[52vh] max-md:ml-3">Server:</label>
         <select
-          className="absolute bg-gray-800 my-211 ml-15 text-white p-2 rounded-xl"
+          className="absolute bg-gray-800 my-211 ml-15 text-white p-2 rounded-xl max-md:my-[51.3vh] max-md:ml-17"
           value={SelectedServer}
           onChange={(e) => setSelectedServer(e.target.value)}
         >
@@ -107,7 +107,7 @@ const Tv_Player = () => {
 
       {/* Video Player */}
       <iframe
-        className="rounded-2xl mx-1 "
+        className="rounded-2xl mx-1 max-md:mx-0 max-md:ml-2"
         src={serverUrls[SelectedServer]}
         allowFullScreen
         height={600}
