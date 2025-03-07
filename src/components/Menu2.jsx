@@ -50,11 +50,11 @@ const Menu2 = () => {
           <Link to="/livetv">Live Tv</Link>
           </span>
         </p>
-        <p className="mt-145 text-xl">
+        {/* <p className="mt-145 text-xl">
           <span className="-ml-3 flex  ">
           <span className="">Made with</span> ❤️ <span>by   <a href="https://manannarwal.me" target="blank">Manan</a></span> 
           </span>
-        </p>
+        </p> */}
       </div>
     </div>
   );
