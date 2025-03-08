@@ -6,7 +6,7 @@ import Upcoming_Movies from "../components/Upcoming_Movies";
 
 const Home = () => {
   return (
-    <div className="mr-3 ml-5 pt-1 flex flex-wrap gap-4 bg-[#121212] rounded-2xl pb-3 mb-3 max-md:bg-[#121212] max-md:-ml-9">
+    <div className="mr-3 ml-5 pt-1 flex flex-wrap gap-4 bg-[#121212] rounded-2xl pb-3 mb-3 max-md:bg-[#121212] max-md:-ml-9 max-lg:ml-13">
       <Slider />
       <div className="ml-3">
       <span className="absolute underline text-2xl ml-1 mb-5 max-md:text-lg">Popular Movies</span>

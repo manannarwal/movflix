@@ -12,11 +12,11 @@ import { GiLoveMystery } from "react-icons/gi";
 
 const Menu2 = () => {
   return (
-    <div className="bg-[#121212] w-[12.7vw] h-[calc(99vh-5.7rem)] mx-3 mt-1 mb-3 rounded-2xl max-md:hidden">
-      <div className="absolute my-[2vh] mx-[2vw] text-xl">
+    <div className="bg-[#121212] w-[12.7vw] h-[calc(99vh-5.7rem)] mx-3 mt-1 mb-3 rounded-2xl max-md:hidden max-lg:w-[18.7vw] max-xl:mr-10 max-lg:pr-40">
+      <div className="absolute my-[2vh] mx-[2vw] text-xl max-xl:text-lg">
         <p className="flex mt-3">
           <AiFillHome className="my-1" />
-          <span className="ml-5">
+          <span className="ml-5 ">
             <Link to="/">Home</Link>
           </span>
         </p>
