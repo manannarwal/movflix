@@ -55,6 +55,7 @@ const Menu2 = () => {
           <span className="">Made with</span> ❤️ <span>by   <a href="https://manannarwal.me" target="blank">Manan</a></span> 
           </span>
         </p> */}
+        {/* Can be added later */}
       </div>
     </div>
   );
