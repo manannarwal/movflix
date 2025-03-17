@@ -1,24 +1,17 @@
-import React from 'react'
-import TextPressure from "../animations/TextPressure";
+import React from 'react';
+import MangaFetch from '../components/MangaFetch';
+
 const Manga = () => {
   return (
-    <div className="bg-[#121212] ml-6 mr-[.5vw] h-229 rounded-2xl max-md:-ml-10 max-md:mr-3 max-md:h-186">
-      <div className="justify-center flex items-center pt-80 ml-20 mr-20 text-8xl"> 
-        <TextPressure
-          text="Coming Soon..."
-          flex={true}
-          alpha={true}
-          stroke={false}
-          width={true}
-          weight={true}
-          italic={true}
-          textColor="#ffffff"
-          strokeColor="#ff0000"
-          minFontSize={32}
-        />
+    <div className="ml-5 max-md:-ml-9 max-md:mr-3 bg-[#121212] rounded-2xl mr-3">
+      <div className="p-4">
+        <span className="underline text-2xl ml-1 mb-4 max-md:text-lg block">
+          Recently Updated
+        </span>
+        <MangaFetch />
       </div>
     </div>
   );
 };
 
-export default Manga
+export default Manga;

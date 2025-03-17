@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Menu2 from "./components/Menu2";
@@ -12,6 +13,8 @@ import Mov_Player from "./components/Mov_Player";
 import Tv_Player from "./components/Tv_Player";
 import Search from "./components/Search";
 import Home from "./pages/Home";
+import MangaCover from "./components/MangaCover";
+import MangaScan from "./components/MangaScan";
 
 
 
@@ -40,6 +43,9 @@ const App = () => {
               <Route path="/" element={<Search />} />
               <Route path="/player/:id" element={<Mov_Player />} />
               <Route path="/tv/:id" element={<Tv_Player />} />
+              <Route path="/manga/:id" element={<MangaCover />} />
+              <Route path="/manga/:mangaId/chapter/:chapterId" element={<MangaScan />} />
+              
               
               <Route path="/movies" element={<Movies />} />
               <Route path="/anime" element={<Anime />} />
@@ -50,9 +56,6 @@ const App = () => {
           </div>
         </div>
       </div>
-        <span className="hidden max-md:bottom-0 max-md:bg-[#121212] max-md:flex max-md:items-center max-md:justify-center max-md:rounded-xl max-md:mx-3 max-md:pt-2 max-md:mb-3">
-          Made with ❤️<span> by <a href="https://manannarwal.me" target="blank"> Manan</a></span>
-        </span>
     </Router>
   );
 };
