@@ -13,7 +13,7 @@ const MangaSearchFetch = ({ query, onResults, onSelect }) => {
       }
 
       try {
-        const url = `https://api.mangadex.org/manga?title=${query}&limit=5&includes[]=cover_art`;
+        const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://api.mangadex.org/manga?title=${query}&limit=5&includes[]=cover_art`)}`;
         const response = await fetch(url);
         const data = await response.json();
 
@@ -49,7 +49,7 @@ const MangaSearchFetch = ({ query, onResults, onSelect }) => {
             {/* Poster Image */}
             {manga.poster_path ? (
               <img
-                src={`https://uploads.mangadex.org/covers/${manga.id}/${manga.poster_path}.256.jpg`}
+                src={`https://api.allorigins.win/raw?url=${encodeURIComponent(`https://uploads.mangadex.org/covers/${manga.id}/${manga.poster_path}.256.jpg`)}`}
                 alt={manga.title}
                 className="w-12 h-16 rounded-lg"
               />

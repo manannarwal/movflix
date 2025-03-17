@@ -14,7 +14,7 @@ const MangaCover = () => {
     const fetchManga = async () => {
       try {
         const response = await fetch(
-          `https://api.mangadex.org/manga/${id}?includes[]=cover_art`
+          `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://api.mangadex.org/manga/${id}?includes[]=cover_art`)}`
         );
         const data = await response.json();
         setManga(data.data);
@@ -32,7 +32,7 @@ const MangaCover = () => {
           const authorsData = await Promise.all(
             authorIds.map(async (authorId) => {
               const res = await fetch(
-                `https://api.mangadex.org/author/${authorId}`
+                `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://api.mangadex.org/author/${authorId}`)}`
               );
               const author = await res.json();
               return author.data?.attributes?.name;
@@ -45,7 +45,7 @@ const MangaCover = () => {
           const artistsData = await Promise.all(
             artistIds.map(async (artistId) => {
               const res = await fetch(
-                `https://api.mangadex.org/author/${artistId}`
+                `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://api.mangadex.org/author/${artistId}`)}`
               );
               const artist = await res.json();
               return artist.data?.attributes?.name;
@@ -67,7 +67,7 @@ const MangaCover = () => {
         try {
           while (hasMore) {
             const response = await fetch(
-              `https://api.mangadex.org/manga/${id}/feed?translatedLanguage[]=en&order[chapter]=asc&limit=${limit}&offset=${offset}`
+              `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://api.mangadex.org/manga/${id}/feed?translatedLanguage[]=en&order[chapter]=asc&limit=${limit}&offset=${offset}`)}`
             );
             const data = await response.json();
       
@@ -98,14 +98,14 @@ const MangaCover = () => {
     return sortAscending ? chapterA - chapterB : chapterB - chapterA;
   });
 
-  if (!manga) return <div>Loading...</div>;
+  if (!manga) return <div className="text-2xl">Loading...</div>;
 
   const coverImage = manga.relationships?.find(
     (rel) => rel.type === "cover_art"
   )?.attributes?.fileName;
 
   const coverUrl = coverImage
-    ? `https://uploads.mangadex.org/covers/${manga.id}/${coverImage}`
+    ? `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://uploads.mangadex.org/covers/${manga.id}/${coverImage}`)}`
     : "/placeholder.jpg";
 
   const genres = manga.attributes.tags

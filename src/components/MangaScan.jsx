@@ -10,7 +10,7 @@ const MangaScan = () => {
       try {
         // Fetch chapter data
         const response = await fetch(
-          `https://api.mangadex.org/at-home/server/${chapterId}`
+          `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://api.mangadex.org/at-home/server/${chapterId}`)}`
         );
         const data = await response.json();
         const baseUrl = data.baseUrl;

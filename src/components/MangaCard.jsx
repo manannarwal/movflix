@@ -9,7 +9,8 @@ const MangaCard = ({ manga }) => {
   )?.attributes?.fileName;
 
   const coverUrl = coverImage
-    ? `https://uploads.mangadex.org/covers/${manga.id}/${coverImage}`
+    ? `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://uploads.mangadex.org/covers/${manga.id}/${coverImage}`)}`
+
     : "/placeholder.jpg";
 
   return (
