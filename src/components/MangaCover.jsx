@@ -59,16 +59,33 @@ const MangaCover = () => {
     };
 
     const fetchChapters = async () => {
-      try {
-        const response = await fetch(
-          `https://api.mangadex.org/manga/${id}/feed?translatedLanguage[]=en&order[chapter]=asc`
-        );
-        const data = await response.json();
-        setChapters(data.data);
-      } catch (error) {
-        console.error("Error fetching chapters:", error);
-      }
-    };
+        let allChapters = [];
+        let offset = 0;
+        const limit = 100; // Max limit per request
+        let hasMore = true;
+      
+        try {
+          while (hasMore) {
+            const response = await fetch(
+              `https://api.mangadex.org/manga/${id}/feed?translatedLanguage[]=en&order[chapter]=asc&limit=${limit}&offset=${offset}`
+            );
+            const data = await response.json();
+      
+            allChapters = [...allChapters, ...data.data];
+            offset += limit;
+      
+            // If the number of returned items is less than the limit, no more chapters left
+            if (data.data.length < limit) {
+              hasMore = false;
+            }
+          }
+      
+          setChapters(allChapters);
+        } catch (error) {
+          console.error("Error fetching chapters:", error);
+        }
+      };
+      
 
     fetchManga();
     fetchChapters();
