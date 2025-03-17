@@ -14,9 +14,8 @@ const MangaFetch = () => {
       let offset = 0;
   
       for (let i = 0; i < 2; i++) {
-        const response = await fetch(
-          `https://api.mangadex.org/manga?limit=${limit}&offset=${offset}&includes[]=cover_art`
-        );
+        const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent('https://api.mangadex.org/manga?limit=20&offset=0&includes[]=cover_art')}`);
+
         const data = await response.json();
         allResults = [...allResults, ...data.data];
         offset += limit;
