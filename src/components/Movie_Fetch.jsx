@@ -77,7 +77,7 @@ const Movie_Fetch = () => {
             return (
               <div key={movie.id} onClick={() => navigate(`/player/${movie.id}`)}>
                 <Card
-                  poster={movie.poster_path}
+                  poster={movie.poster_path || null}
                   title={movie.title}
                   rating={movie.vote_average}
                 />

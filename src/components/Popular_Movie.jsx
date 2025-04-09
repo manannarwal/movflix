@@ -62,7 +62,7 @@ const Toprated_Movie = () => {
             ref={isLast ? lastMovieRef : null}
           >
             <Card
-              poster={movie.poster_path}
+              poster={movie.poster_path || null}
               title={movie.title}
               rating={movie.vote_average}
             />

@@ -66,7 +66,7 @@ const Tvshowfetch = () => {
                 onClick={() => navigate(`/tv/${tv.id}`)}
               >
                 <Card
-                  poster={tv.poster_path}
+                  poster={tv.poster_path || null}
                   title={title}
                   rating={tv.vote_average}
                 />
