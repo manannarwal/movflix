@@ -1,40 +1,78 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import Card from "./Card";
 import { useNavigate } from "react-router-dom";
 
-const Upcoming_Movies = () => {
+const Toprated_Movie = () => {
   const [movies, setMovies] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const observer = useRef();
+  const MAX_PAGES = 2;
 
-  const getMovie = async () => {
+
+  const fetchMovies = async (pageNumber) => {
+    if (pageNumber > MAX_PAGES) {
+      setHasMore(false); // ✅ stop further loading
+      return;
+    }
+  
+    setLoading(true);
     try {
       const response = await fetch(
-        "https://api.themoviedb.org/3/movie/upcoming?api_key=014463e32f320e61f3c8248c6db9ee80"
+        `https://api.themoviedb.org/3/movie/upcoming?api_key=014463e32f320e61f3c8248c6db9ee80&page=${pageNumber}`
       );
       const data = await response.json();
-      setMovies(data.results);
+  
+      setMovies((prev) => [...prev, ...data.results]);
+      setHasMore(data.page < data.total_pages && pageNumber < MAX_PAGES);
     } catch (error) {
-      console.log("Error Fetching Data", error);
+      console.error("Error fetching data:", error);
     }
+    setLoading(false);
   };
-
   useEffect(() => {
-    getMovie();
-  }, []);
+    fetchMovies(page);
+  }, [page]);
+
+  // Observer for last element
+  const lastMovieRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPage((prev) => prev + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore]
+  );
+
   return (
-    <div className="pt-20 flex flex-wrap gap-4">
-      {movies.map((movie) => (
-        <div key={movie.id} onClick={() => navigate(`/player/${movie.id}`)}>
-          <Card
+    <div className="pt-22 flex flex-wrap gap-4 pl-2">
+      {movies.map((movie, index) => {
+        const isLast = index === movies.length - 1;
+        return (
+          <div
             key={movie.id}
-            poster={movie.poster_path}
-            title={movie.title}
-            rating={movie.vote_average}
-          />
-        </div>
-      ))}
+            onClick={() => navigate(`/player/${movie.id}`)}
+            ref={isLast ? lastMovieRef : null}
+          >
+            <Card
+              poster={movie.poster_path}
+              title={movie.title}
+              rating={movie.vote_average}
+            />
+          </div>
+        );
+      })}
+
+      {loading && <p className="text-white text-lg text-center w-full">Loading...</p>}
     </div>
   );
 };
 
-export default Upcoming_Movies;
+export default Toprated_Movie;
