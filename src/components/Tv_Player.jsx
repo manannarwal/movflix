@@ -9,7 +9,25 @@ const Tv_Player = () => {
   const [selectedEpisode, setSelectedEpisode] = useState(1);
   const [SelectedServer, setSelectedServer] = useState("vidlink");
 
-  // Fetch seasons for the selected TV show
+  // Load saved state from localStorage
+  useEffect(() => {
+    const savedData = localStorage.getItem(`tv_${id}`);
+    if (savedData) {
+      const { season, episode } = JSON.parse(savedData);
+      setSelectedSeason(season);
+      setSelectedEpisode(episode);
+    }
+  }, [id]);
+
+  // Save to localStorage on change
+  useEffect(() => {
+    localStorage.setItem(`tv_${id}`, JSON.stringify({
+      season: selectedSeason,
+      episode: selectedEpisode,
+    }));
+  }, [id, selectedSeason, selectedEpisode]);
+
+  // Fetch seasons
   useEffect(() => {
     const fetchSeasons = async () => {
       try {
@@ -18,14 +36,12 @@ const Tv_Player = () => {
           `https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&language=en-US`
         );
         const data = await response.json();
-
         const seasonList = data.seasons.map((season) => season.season_number);
         setSeasons(seasonList);
       } catch (error) {
         console.log("Error fetching seasons:", error);
       }
     };
-
     fetchSeasons();
   }, [id]);
 
@@ -38,14 +54,17 @@ const Tv_Player = () => {
           `https://api.themoviedb.org/3/tv/${id}/season/${selectedSeason}?api_key=${apiKey}&language=en-US`
         );
         const data = await response.json();
-
         const episodeList = data.episodes.map((ep) => ep.episode_number);
         setEpisodes(episodeList);
+
+        // If current selected episode doesn't exist in new season, reset
+        if (!episodeList.includes(selectedEpisode)) {
+          setSelectedEpisode(1);
+        }
       } catch (error) {
         console.log("Error fetching episodes:", error);
       }
     };
-
     fetchEpisodes();
   }, [id, selectedSeason]);
 
@@ -56,10 +75,9 @@ const Tv_Player = () => {
   };
 
   return (
-    <div className="absolute bg-[#121212] pb-23 ml-5 rounded-2xl font-sans max-md:mx-0 max-md:-ml-[10vw] max-md:pb-[37vh] max-md:mr-3 max-md:text-sm max-md:relative" >
+    <div className="absolute bg-[#121212] pb-23 ml-5 rounded-2xl font-sans max-md:mx-0 max-md:-ml-[10vw] max-md:pb-[37vh] max-md:mr-3 max-md:text-sm max-md:relative">
       {/* Season & Episode Selection */}
       <div className="flex gap-4 mb-2">
-        {/* Season Dropdown */}
         <div className="absolute my-213 mx-8 max-md:my-[60vh] max-md:ml-3">
           <label className="text-white mr-2">Season:</label>
           <select
@@ -75,7 +93,6 @@ const Tv_Player = () => {
           </select>
         </div>
 
-        {/* Episode Dropdown */}
         <div className="absolute my-213 mx-50 max-md:my-[59.5vh] max-md:flex max-md:ml-[42vw]">
           <label className="text-white ml-5 mr-2 max-md:mt-1.5">Episode:</label>
           <select
@@ -92,7 +109,7 @@ const Tv_Player = () => {
         </div>
       </div>
 
-      <div className="absolute  mx-390 max-md:mx-0">
+      <div className="absolute mx-390 max-md:mx-0">
         <label className="absolute my-213 text-white max-md:my-[52vh] max-md:ml-3">Server:</label>
         <select
           className="absolute bg-gray-800 my-211 ml-15 text-white p-2 rounded-xl max-md:my-[51.3vh] max-md:ml-17"
@@ -105,7 +122,6 @@ const Tv_Player = () => {
         </select>
       </div>
 
-      {/* Video Player */}
       <iframe
         className="rounded-2xl mx-1 max-md:mx-0 max-md:ml-2"
         src={serverUrls[SelectedServer]}
