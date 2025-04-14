@@ -75,10 +75,10 @@ const Tv_Player = () => {
   };
 
   return (
-    <div className="absolute bg-[#121212] pb-23 ml-5 rounded-2xl font-sans max-md:mx-0 max-md:-ml-[10vw] max-md:pb-[37vh] max-md:mr-3 max-md:text-sm max-md:relative">
+    <div className="absolute bg-[#121212] pb-23 ml-5 rounded-2xl font-sans max-md:mx-0 max-md:-ml-[10vw] max-md:pb-[37vh] max-md:mr-3 max-md:text-sm max-md:relative min-[1024px]:pb-[17vh]">
       {/* Season & Episode Selection */}
       <div className="flex gap-4 mb-2">
-        <div className="absolute my-213 mx-8 max-md:my-[60vh] max-md:ml-3">
+        <div className="absolute my-213 mx-8 max-md:my-[60vh] max-md:ml-3 min-[1024px]:mt-[75vh]">
           <label className="text-white mr-2">Season:</label>
           <select
             className=" bg-gray-800 text-white p-2 rounded-xl"
@@ -93,7 +93,7 @@ const Tv_Player = () => {
           </select>
         </div>
 
-        <div className="absolute my-213 mx-50 max-md:my-[59.5vh] max-md:flex max-md:ml-[42vw]">
+        <div className="absolute my-213 mx-50 max-md:my-[59.5vh] max-md:flex max-md:ml-[42vw] min-[1024px]:mt-[75vh]">
           <label className="text-white ml-5 mr-2 max-md:mt-1.5">Episode:</label>
           <select
             className="bg-gray-800 text-white p-2 rounded-xl max-md:mt-1"
@@ -109,7 +109,7 @@ const Tv_Player = () => {
         </div>
       </div>
 
-      <div className="absolute mx-390 max-md:mx-0">
+      <div className="absolute mx-390 max-md:mx-0 min-[1024px]:-mt-[26vh] min-[1024px]:ml-[65vw] min-[1920px]:-mt-[9vh] min-[1920px]:ml-[74vw]">
         <label className="absolute my-213 text-white max-md:my-[52vh] max-md:ml-3">Server:</label>
         <select
           className="absolute bg-gray-800 my-211 ml-15 text-white p-2 rounded-xl max-md:my-[51.3vh] max-md:ml-17"

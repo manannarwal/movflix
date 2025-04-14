@@ -27,3 +27,11 @@ iframe{
   }
   
 }
+
+@media screen and (min-width: 1024px) {
+  iframe{
+    height: 70vh;
+    width: 83.5vw;
+  }
+  
+}
