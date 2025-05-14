@@ -23,3 +23,16 @@ Follow these steps to set up **MovFlix** locally:
 ```bash
 git clone https://github.com/your-username/movflix.git
 cd movflix
+````
+
+### 2. Install Dependencies
+
+```bash
+npm install
+````
+
+### 3. Start the Deployment Server
+
+```bash
+npm start
+````
