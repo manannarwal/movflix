@@ -1,8 +1,38 @@
-# React + Vite
+# 🎬 MovFlix
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**MovFlix** is a sleek and intuitive streaming web application that brings together movies, series, and manga — all in one place. Powered by popular video providers and third-party APIs, MovFlix allows users to search and enjoy content seamlessly.
 
-Currently, two official plugins are available:
+## 🛠️ Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **JavaScript**
+- **React.js**
+- **HTML5 & CSS3**
+- **Tailwind CSS**
+- Additional Libraries & Tools:
+  - Axios
+  - React Router
+  - Environment config (.env)
+  - Third-party video embed services
+
+## 📦 Getting Started
+
+Follow these steps to set up **MovFlix** locally:
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/manannarwal/movflix.git
+cd movflix
+````
+
+### 2. Install Dependencies
+
+```bash
+npm install
+````
+
+### 3. Start the Deployment Server
+
+```bash
+npm start
+````
