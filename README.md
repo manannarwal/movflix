@@ -34,5 +34,5 @@ npm install
 ### 3. Start the Deployment Server
 
 ```bash
-npm start
+npm run dev
 ````
