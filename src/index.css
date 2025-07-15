@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  font-family: Gilroy;
+  font-family: Gilroy, 'Inter', 'Segoe UI', 'Roboto', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -13,6 +13,45 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #374151, #4b5563);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #4b5563, #6b7280);
+}
+
+/* Text selection */
+::selection {
+  background-color: rgba(59, 130, 246, 0.3);
+  color: white;
+}
+
+/* Smooth focus transitions */
+*:focus {
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+}
+
+/* Line clamp utility */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 iframe{

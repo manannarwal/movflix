@@ -15,7 +15,7 @@ const Search = () => {
   const isMangaRoute = location.pathname.startsWith("/manga");
 
   const handleResults = useCallback(
-    (results) => setResults(results.slice(0, 5)),
+    (results) => setResults(results.slice(0, 20)),
     []
   );
 
@@ -44,34 +44,32 @@ const Search = () => {
   }, []);
 
   return (
-    <div ref={searchRef}>
-      {/* Search Results */}
-      {showResults && search.length >= 2 && (
-        isMangaRoute ? (
-          <MangaSearchFetch query={search} onResults={handleResults} onSelect={handleSelect} />
-        ) : (
-          <Search_Fetch query={search} onResults={handleResults} onSelect={handleSelect} />
-        )
-      )}
-
+    <div ref={searchRef} className="flex-1 flex justify-center items-center px-4 max-md:px-2">
       {/* Search Bar */}
-      <div className="mb-50 relative font-sans font-semibold">
-        <div className="relative inline-block">
-          <CiSearch className="absolute left-[36vw] top-[1em] size-7 text-gray-400 max-md:size-6 max-md:left-26 max-md:pt-1" />
-          <input
-            className="bg-[#191919] ml-[35vw] mt-2.5 w-[30vw] pl-15 py-2 rounded-3xl ease-in-out duration-200 outline-none focus:bg-[#202020] max-md:mt-3.5 max-md:ml-25 max-md:pl-7 max-md:w-[53vw] max-md:text-xs"
-            type="text"
-            value={search}
-            placeholder={isMangaRoute ? "Search Mangas..." : "Search Movies, Series, Anime..."}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setShowResults(true);
-            }}
-            onFocus={() => {
-              if (search.length >= 2) setShowResults(true);
-            }}
-          />
-        </div>
+      <div className="relative w-full max-w-md max-md:max-w-xs">
+        <CiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 size-5 text-gray-400 transition-colors duration-200 max-md:size-4 max-md:left-2.5" />
+        <input
+          className="bg-[#191919] w-full pl-10 pr-4 py-2.5 rounded-3xl ease-in-out duration-200 outline-none focus:bg-[#202020] focus:ring-2 focus:ring-blue-400/50 border border-white/5 hover:border-white/10 placeholder-gray-400 text-white text-sm max-md:pl-8 max-md:pr-3 max-md:py-2 max-md:text-xs"
+          type="text"
+          value={search}
+          placeholder={isMangaRoute ? "Search Mangas..." : "Search Movies, Series, Anime..."}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setShowResults(true);
+          }}
+          onFocus={() => {
+            if (search.length >= 2) setShowResults(true);
+          }}
+        />
+        
+        {/* Search Results */}
+        {showResults && search.length >= 2 && (
+          isMangaRoute ? (
+            <MangaSearchFetch query={search} onResults={handleResults} onSelect={handleSelect} />
+          ) : (
+            <Search_Fetch query={search} onResults={handleResults} onSelect={handleSelect} />
+          )
+        )}
       </div>
     </div>
   );

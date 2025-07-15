@@ -11,6 +11,13 @@ const movie = () => {
       <Trending_Movie />
       <p className='pl-4 text-2xl mt-5 underline'>Popular Movies</p>
       <Popular_Movie />
+      
+      {/* Disclaimer */}
+      <div className="mt-8 mx-4 p-4 bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 text-center max-md:mt-6 max-md:p-3">
+        <p className="text-gray-400 text-sm max-md:text-xs">
+          This site does not store any files on the server, we only linked to the media which is hosted on 3rd party services.
+        </p>
+      </div>
     </div>
   )
 }

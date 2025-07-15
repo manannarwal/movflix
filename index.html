@@ -5,6 +5,42 @@
     <link rel="icon" type="image/svg+xml" href="/src/photos/images.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MovFlix</title>
+    <script>
+      // Suppress console errors from third-party iframe content
+      (function() {
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        console.error = function(...args) {
+          const message = args.join(' ');
+          // Filter out known third-party errors
+          if (
+            message.includes('yandex.ru') ||
+            message.includes('cloudflareinsights.com') ||
+            message.includes('clarity.ms') ||
+            message.includes('usrpubtrk.com') ||
+            message.includes('cloudfront.net') ||
+            message.includes('aclib') ||
+            message.includes('Adcash') ||
+            message.includes('VidStack DirectLink') ||
+            message.includes('ERR_BLOCKED_BY_CLIENT') ||
+            message.includes('document.domain mutation')
+          ) {
+            return; // Suppress these errors
+          }
+          originalError.apply(console, args);
+        };
+        
+        console.warn = function(...args) {
+          const message = args.join(' ');
+          // Filter out preload warnings
+          if (message.includes('preloaded using link preload')) {
+            return; // Suppress these warnings
+          }
+          originalWarn.apply(console, args);
+        };
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

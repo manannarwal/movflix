@@ -4,7 +4,7 @@ import { GiNinjaHead } from "react-icons/gi";
 import { BiCameraMovie } from "react-icons/bi";
 import { FaTv } from "react-icons/fa6";
 import { LuTv } from "react-icons/lu";
-import { MdMenuBook } from "react-icons/md";
+import { MdMenuBook, MdConnectWithoutContact } from "react-icons/md";
 import { LuDrama } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { GiLoveMystery } from "react-icons/gi";
@@ -12,42 +12,48 @@ import { GiLoveMystery } from "react-icons/gi";
 
 const Menu2 = () => {
   return (
-    <div className="bg-[#121212] w-[12.7vw] h-[calc(99vh-5.7rem)] mx-3 mt-1 mb-3 rounded-2xl max-md:hidden max-lg:w-[18.7vw] max-xl:mr-10 max-lg:pr-40">
+    <div className="bg-[#121212] w-[12.7vw] h-[calc(99vh-5.7rem)] mx-3 mt-1 mb-3 rounded-2xl max-md:hidden max-lg:w-[18.7vw] max-xl:mr-10 max-lg:pr-40 shadow-lg">
       <div className="absolute my-[2vh] mx-[2vw] text-xl max-xl:text-lg">
-        <p className="flex mt-3">
+        <p className="flex mt-3 hover:text-blue-400 hover:bg-white/5 p-2 rounded-lg transition-all duration-200 cursor-pointer">
           <AiFillHome className="my-1" />
           <span className="ml-5 ">
             <Link to="/">Home</Link>
           </span>
         </p>
-        <p className="flex mt-5">
+        <p className="flex mt-5 hover:text-blue-400 hover:bg-white/5 p-2 rounded-lg transition-all duration-200 cursor-pointer">
           <BiCameraMovie className="my-1" />
           <span className="ml-5">
             <Link to="/movies">Movies</Link>
           </span>
         </p>
-        <p className="flex mt-5">
+        <p className="flex mt-5 hover:text-blue-400 hover:bg-white/5 p-2 rounded-lg transition-all duration-200 cursor-pointer">
           <FaTv className="my-1" />
           <span className="ml-5">
           <Link to="/tvshows">Tv Shows</Link>
           </span>
         </p>
-        <p className="flex mt-5">
+        <p className="flex mt-5 hover:text-blue-400 hover:bg-white/5 p-2 rounded-lg transition-all duration-200 cursor-pointer">
           <GiNinjaHead className="my-1" />
           <span className="ml-5">
           <Link to="/anime">Anime</Link>
           </span>
         </p>
-        <p className="flex mt-5">
+        <p className="flex mt-5 hover:text-blue-400 hover:bg-white/5 p-2 rounded-lg transition-all duration-200 cursor-pointer">
           <MdMenuBook className="my-1" />
           <span className="ml-5">
           <Link to="/manga">Manga</Link>
           </span>
         </p>
-        <p className="flex mt-5">
+        <p className="flex mt-5 hover:text-blue-400 hover:bg-white/5 p-2 rounded-lg transition-all duration-200 cursor-pointer">
           <LuTv className="my-1" />
           <span className="ml-5">
           <Link to="/livetv">Live Tv</Link>
+          </span>
+        </p>
+        <p className="flex mt-5 hover:text-blue-400 hover:bg-white/5 p-2 rounded-lg transition-all duration-200 cursor-pointer">
+          <MdConnectWithoutContact className="my-1" />
+          <span className="ml-5">
+          <Link to="/connect">Connect</Link>
           </span>
         </p>
         {/* <p className="mt-145 text-xl">
