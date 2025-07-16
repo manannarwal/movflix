@@ -2,7 +2,8 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
 import { useNavigate, useLocation } from "react-router-dom";
 import Search_Fetch from "./Search_Fetch";
-import MangaSearchFetch from "./MangaSearchFetch";
+import MangaSearchFetch from "./manga/MangaSearchFetch";
+import AnimeSearchFetch from "./anime/AnimeSearchFetch";
 
 const Search = () => {
   const [search, setSearch] = useState("");
@@ -13,6 +14,7 @@ const Search = () => {
   const location = useLocation();
 
   const isMangaRoute = location.pathname.startsWith("/manga");
+  const isAnimeRoute = location.pathname.startsWith("/anime");
 
   const handleResults = useCallback(
     (results) => setResults(results.slice(0, 20)),
@@ -22,6 +24,8 @@ const Search = () => {
   const handleSelect = (item) => {
     if (isMangaRoute) {
       navigate(`/manga/${item.id}`);
+    } else if (isAnimeRoute) {
+      navigate(`/anime-player/${item.id}`);
     } else if (item.media_type === "movie") {
       navigate(`/player/${item.id}`);
     } else if (item.media_type === "tv") {
@@ -43,6 +47,12 @@ const Search = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const getPlaceholder = () => {
+    if (isMangaRoute) return "Search Mangas...";
+    if (isAnimeRoute) return "Search Anime...";
+    return "Search Movies, Series, Anime...";
+  };
+
   return (
     <div ref={searchRef} className="flex-1 flex justify-center items-center px-4 max-md:px-2">
       {/* Search Bar */}
@@ -52,7 +62,7 @@ const Search = () => {
           className="bg-[#191919] w-full pl-10 pr-4 py-2.5 rounded-3xl ease-in-out duration-200 outline-none focus:bg-[#202020] focus:ring-2 focus:ring-blue-400/50 border border-white/5 hover:border-white/10 placeholder-gray-400 text-white text-sm max-md:pl-8 max-md:pr-3 max-md:py-2 max-md:text-xs"
           type="text"
           value={search}
-          placeholder={isMangaRoute ? "Search Mangas..." : "Search Movies, Series, Anime..."}
+          placeholder={getPlaceholder()}
           onChange={(e) => {
             setSearch(e.target.value);
             setShowResults(true);
@@ -64,11 +74,15 @@ const Search = () => {
         
         {/* Search Results */}
         {showResults && search.length >= 2 && (
-          isMangaRoute ? (
-            <MangaSearchFetch query={search} onResults={handleResults} onSelect={handleSelect} />
-          ) : (
-            <Search_Fetch query={search} onResults={handleResults} onSelect={handleSelect} />
-          )
+          <>
+            {isMangaRoute ? (
+              <MangaSearchFetch query={search} onResults={handleResults} onSelect={handleSelect} />
+            ) : isAnimeRoute ? (
+              <AnimeSearchFetch query={search} onResults={handleResults} onSelect={handleSelect} />
+            ) : (
+              <Search_Fetch query={search} onResults={handleResults} onSelect={handleSelect} />
+            )}
+          </>
         )}
       </div>
     </div>

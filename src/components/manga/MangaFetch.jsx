@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import MangaCard from "./MangaCard";
+import MangaCard from "../manga/MangaCard";
 import { useNavigate } from "react-router-dom";
 
 const MangaFetch = () => {
@@ -25,7 +25,7 @@ const MangaFetch = () => {
       setManga(allResults);
       setCount(allResults.length);
     } catch (error) {
-      console.log("Error Fetching Data", error);
+      console.error("Error Fetching Data", error);
     }
   };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import MangaFetch from '../components/MangaFetch';
+import MangaFetch from '../components/manga/MangaFetch';
 
 const Manga = () => {
   return (

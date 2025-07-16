@@ -99,10 +99,6 @@ const Slider = () => {
     setDragOffset(0);
   };
 
-  // If movies have not loaded, show loading text
-  if (movies.length === 0)
-    return <div className="text-white text-center">Loading...</div>;
-
   // Calculate slide width from container ref (if available)
   const slideWidth = sliderRef.current ? sliderRef.current.clientWidth : 0;
   // Compute the translateX value: start from current slide, then add the drag offset.

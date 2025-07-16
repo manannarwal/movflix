@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import Card from "./Card";
+import Card from "../Card";
 import { useNavigate } from "react-router-dom";
 
 const Tvshowfetch = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import Tvshowfetch from "../components/Tvshowfetch";
+import Tvshowfetch from "../components/tvshows/Tvshowfetch";
 
 const Tvshow = () => {
   return (

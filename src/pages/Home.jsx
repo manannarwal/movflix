@@ -1,8 +1,8 @@
 import React from "react";
 import Slider from "../components/Slider";
-import Pop_Movie from "../components/Popular_Movie";
-import Toprated_Movie from "../components/Toprated_Movie";
-import Upcoming_Movies from "../components/Upcoming_Movies";
+import Pop_Movie from "../components/movies/Popular_Movie";
+import Toprated_Movie from "../components/movies/Toprated_Movie";
+import Upcoming_Movies from "../components/movies/Upcoming_Movies";
 
 const Home = () => {
   return (

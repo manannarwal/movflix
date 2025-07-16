@@ -1,7 +1,7 @@
 import React from 'react'
-import Movie_Fetch from '../components/Movie_Fetch'
-import Trending_Movie from '../components/Trending_Movie'
-import Popular_Movie from '../components/Popular_Movie'
+import Movie_Fetch from '../components/movies/Movie_Fetch'
+import Trending_Movie from '../components/movies/Trending_Movie'
+import Popular_Movie from '../components/movies/Popular_Movie'
 
 const movie = () => {
   return (

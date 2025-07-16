@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { CiStar } from "react-icons/ci";
 import { MdImageNotSupported } from "react-icons/md";
 
 const Card = ({ poster, title, rating, id, onClick, className = "" }) => {
@@ -26,9 +25,9 @@ const Card = ({ poster, title, rating, id, onClick, className = "" }) => {
     }
   };
 
-  const imageUrl = poster ? `https://image.tmdb.org/t/p/w500${poster}` : null;
-  const numericRating = rating ? parseFloat(rating) : 0;
-  const formattedRating = (numericRating > 0) ? numericRating.toFixed(1) : null;
+  const imageUrl = poster ? (
+    poster.startsWith('http') ? poster : `https://image.tmdb.org/t/p/w500${poster}`
+  ) : null;
 
   return (
     <article
@@ -77,17 +76,6 @@ const Card = ({ poster, title, rating, id, onClick, className = "" }) => {
 
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
-
-        {/* Rating Badge */}
-        {(numericRating > 0) && (
-          <div className="absolute top-3 right-3 z-10 flex items-center text-white font-bold bg-black/80 backdrop-blur-md px-3 py-2 rounded-xl max-md:text-sm border border-white/20 shadow-lg transform translate-y-[-2px] group-hover:translate-y-0 transition-transform duration-300">
-            <CiStar 
-              className="mr-1.5 text-yellow-400 text-lg group-hover:rotate-12 transition-transform duration-300" 
-              aria-hidden="true" 
-            />
-            <span className="text-sm font-bold">{formattedRating}</span>
-          </div>
-        )}
 
         {/* Title Overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-all duration-500 ease-out">
