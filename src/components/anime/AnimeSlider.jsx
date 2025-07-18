@@ -2,6 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAnimeInfoById, getApiUrl } from "../../utils/aniwatchApi";
 
+// Helper function to fetch with CORS handling
+const fetchWithCORS = async (url) => {
+  if (import.meta.env.PROD) {
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+    const response = await fetch(proxyUrl);
+    const data = await response.json();
+    return JSON.parse(data.contents);
+  } else {
+    const response = await fetch(url);
+    return await response.json();
+  }
+};
+
 const AnimeSlider = () => {
   const [animes, setAnimes] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,8 +30,7 @@ const AnimeSlider = () => {
   useEffect(() => {
     const fetchTopAiringAnime = async () => {
       try {
-        const response = await fetch(getApiUrl('/category/top-airing?page=1'));
-        const data = await response.json();
+        const data = await fetchWithCORS(getApiUrl('/category/top-airing?page=1'));
         
         if (data.status === 200 && data.data.animes) {
           const sliced = data.data.animes.slice(0, 6); // Use only 6 anime

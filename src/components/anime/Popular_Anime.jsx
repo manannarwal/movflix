@@ -3,6 +3,19 @@ import Card from "../Card";
 import { useNavigate } from "react-router-dom";
 import { getApiUrl } from "../../utils/aniwatchApi";
 
+// Helper function to fetch with CORS handling
+const fetchWithCORS = async (url) => {
+  if (import.meta.env.PROD) {
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+    const response = await fetch(proxyUrl);
+    const data = await response.json();
+    return JSON.parse(data.contents);
+  } else {
+    const response = await fetch(url);
+    return await response.json();
+  }
+};
+
 const Popular_Anime = () => {
   const [animes, setAnimes] = useState([]);
   const [page, setPage] = useState(1);
@@ -20,8 +33,7 @@ const Popular_Anime = () => {
       
       for (let i = 0; i < pagesToLoad; i++) {
         const currentPage = (pageNumber - 1) * pagesToLoad + i + 1;
-        const response = await fetch(getApiUrl(`/category/most-popular?page=${currentPage}`));
-        const data = await response.json();
+        const data = await fetchWithCORS(getApiUrl(`/category/most-popular?page=${currentPage}`));
         
         if (data.status === 200 && data.data.animes) {
           const animeList = data.data.animes.map(anime => ({
