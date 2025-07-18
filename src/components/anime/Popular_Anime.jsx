@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Card from "../Card";
 import { useNavigate } from "react-router-dom";
+import { getApiUrl } from "../../utils/aniwatchApi";
 
 const Popular_Anime = () => {
   const [animes, setAnimes] = useState([]);
@@ -19,7 +20,7 @@ const Popular_Anime = () => {
       
       for (let i = 0; i < pagesToLoad; i++) {
         const currentPage = (pageNumber - 1) * pagesToLoad + i + 1;
-        const response = await fetch(`/api/v2/hianime/category/most-popular?page=${currentPage}`);
+        const response = await fetch(getApiUrl(`/category/most-popular?page=${currentPage}`));
         const data = await response.json();
         
         if (data.status === 200 && data.data.animes) {

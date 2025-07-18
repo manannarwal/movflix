@@ -1,4 +1,12 @@
-const API_BASE = "/api/v2/hianime";
+// Use full API URL for production, proxy for development
+const API_BASE = import.meta.env.PROD 
+  ? "https://aniwatch-api-three-nu.vercel.app/api/v2/hianime"
+  : "/api/v2/hianime";
+
+// Helper function to get the correct API URL
+export const getApiUrl = (endpoint) => {
+  return `${API_BASE}${endpoint}`;
+};
 
 // Search anime by query
 export async function searchAnime(query) {

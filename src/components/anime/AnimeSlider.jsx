@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAnimeInfoById } from "../../utils/aniwatchApi";
+import { getAnimeInfoById, getApiUrl } from "../../utils/aniwatchApi";
 
 const AnimeSlider = () => {
   const [animes, setAnimes] = useState([]);
@@ -17,7 +17,7 @@ const AnimeSlider = () => {
   useEffect(() => {
     const fetchTopAiringAnime = async () => {
       try {
-        const response = await fetch('/api/v2/hianime/category/top-airing?page=1');
+        const response = await fetch(getApiUrl('/category/top-airing?page=1'));
         const data = await response.json();
         
         if (data.status === 200 && data.data.animes) {

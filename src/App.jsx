@@ -20,7 +20,7 @@ import MangaCover from "./components/manga/MangaCover";
 import MangaScan from "./components/manga/MangaScan";
 import { initializeConsoleFilter } from "./utils/consoleManager";
 
-
+  
 
 const AppContent = () => {
   const navigate = useNavigate();
