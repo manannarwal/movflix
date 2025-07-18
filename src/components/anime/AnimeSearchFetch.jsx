@@ -1,5 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { searchAnime } from "../../utils/animeMapping";
+import { getApiUrl } from "../../utils/aniwatchApi";
+
+// Helper function to fetch with CORS handling
+const fetchWithCORS = async (url) => {
+  if (import.meta.env.PROD) {
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+    const response = await fetch(proxyUrl);
+    const data = await response.json();
+    return JSON.parse(data.contents);
+  } else {
+    const response = await fetch(url);
+    return await response.json();
+  }
+};
 
 const AnimeSearchFetch = ({ query, onResults, onSelect }) => {
   const [results, setResults] = useState([]);
@@ -15,17 +28,24 @@ const AnimeSearchFetch = ({ query, onResults, onSelect }) => {
 
       setLoading(true);
       try {
-        const animeResults = await searchAnime(query);
-        const formattedResults = animeResults.map(anime => ({
-          id: anime.id,
-          title: anime.title,
-          image: anime.image,
-          rating: anime.rating || "N/A",
-          media_type: "anime"
-        }));
+        // Use the same Aniwatch API that the homepage uses
+        const data = await fetchWithCORS(getApiUrl(`/search?q=${encodeURIComponent(query)}`));
         
-        setResults(formattedResults);
-        onResults(formattedResults);
+        if (data.status === 200 && data.data.animes) {
+          const formattedResults = data.data.animes.map(anime => ({
+            id: anime.id, // This will be the Aniwatch ID, same as homepage cards
+            title: anime.name,
+            image: anime.poster,
+            rating: anime.rating || "N/A",
+            media_type: "anime"
+          }));
+          
+          setResults(formattedResults);
+          onResults(formattedResults);
+        } else {
+          setResults([]);
+          onResults([]);
+        }
       } catch (error) {
         console.error("Error searching anime:", error);
         setResults([]);
