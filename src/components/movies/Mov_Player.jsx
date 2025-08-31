@@ -68,8 +68,8 @@ const Mov_Player = () => {
   }, []);
 
   return (
-    <div className="min-h-screen ml-4 mb-4 overflow-hidden max-md:-ml-10 max-md:mb-2">
-      <div className="mr-3 bg-[#121212] rounded-2xl border border-white/5 shadow-lg p-6 max-md:p-4 max-w-full">
+    <div className="min-h-screen ml-4 mb-4 mr-3 overflow-hidden max-md:-ml-10 max-md:mb-2">
+      <div className="bg-[#121212] rounded-2xl border border-white/5 shadow-lg p-6 max-md:p-4 max-w-full">
         {/* Header Section */}
         <div className="flex items-center justify-between mb-6 max-md:mb-4 max-md:flex-col max-md:gap-4">
           <button
@@ -95,11 +95,11 @@ const Mov_Player = () => {
         </div>
 
         {/* Main Player Container */}
-        <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
+        <div className="bg-white/5 rounded-2xl border border-white/10 shadow-lg overflow-hidden">
           {/* Video Player */}
-          <div className="relative w-full aspect-video bg-black rounded-t-2xl flex items-center justify-center overflow-hidden">
+          <div className="relative w-full">
             {isLoading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-20 rounded-t-2xl">
+              <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-20 rounded-t-2xl">
                 <div className="flex flex-col items-center gap-4">
                   <div className="w-16 h-16 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
                   <p className="text-white font-medium">Loading player...</p>
@@ -109,7 +109,13 @@ const Mov_Player = () => {
             
             <iframe
               src={serverUrls[selectedServer]}
-              className="border-0 rounded-t-2xl max-w-full max-h-full"
+              className="border-0 rounded-t-2xl w-full"
+              style={{ 
+                height: '70vh',
+                minHeight: '400px',
+                transform: 'translateZ(0)',
+                backfaceVisibility: 'hidden'
+              }}
               allowFullScreen
               onLoad={handleIframeLoad}
               onError={handleIframeError}

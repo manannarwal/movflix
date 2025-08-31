@@ -170,11 +170,11 @@ const Tv_Player = () => {
         </div>
 
         {/* Main Player Container */}
-        <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
+        <div className="bg-white/5 rounded-2xl border border-white/10 shadow-lg overflow-hidden">
           {/* Video Player */}
-          <div className="relative w-full aspect-video bg-black rounded-t-2xl flex items-center justify-center overflow-hidden">
+          <div className="relative w-full">
             {isLoading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-20 rounded-t-2xl">
+              <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-20 rounded-t-2xl">
                 <div className="flex flex-col items-center gap-4">
                   <div className="w-16 h-16 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
                   <p className="text-white font-medium">Loading episode...</p>
@@ -184,7 +184,13 @@ const Tv_Player = () => {
             
             <iframe
               src={serverUrls[selectedServer]}
-              className="border-0 rounded-t-2xl max-w-full max-h-full"
+              className="border-0 rounded-t-2xl w-full"
+              style={{ 
+                height: '70vh',
+                minHeight: '400px',
+                transform: 'translateZ(0)',
+                backfaceVisibility: 'hidden'
+              }}
               allowFullScreen
               onLoad={handleIframeLoad}
               onError={handleIframeError}

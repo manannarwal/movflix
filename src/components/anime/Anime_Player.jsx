@@ -169,11 +169,11 @@ const Anime_Player = () => {
         </div>
 
         {/* Main Player Container */}
-        <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
+        <div className="bg-white/5 rounded-2xl border border-white/10 shadow-lg overflow-hidden">
           {/* Video Player */}
-          <div className="relative w-full aspect-video bg-black rounded-t-2xl flex items-center justify-center overflow-hidden">
+          <div className="relative w-full">
             {isLoading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-20 rounded-t-2xl">
+              <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-20 rounded-t-2xl">
                 <div className="flex flex-col items-center gap-4">
                   <div className="w-16 h-16 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
                   <p className="text-white font-medium">Loading episode...</p>
@@ -182,7 +182,7 @@ const Anime_Player = () => {
             )}
 
             {!streamUrl ? (
-              <div className="absolute inset-0 flex items-center justify-center bg-black rounded-t-2xl">
+              <div className="flex items-center justify-center bg-gray-900 rounded-t-2xl" style={{ height: '70vh', minHeight: '400px' }}>
                 <div className="text-center">
                   <BiSolidMoviePlay size={64} className="mx-auto mb-4 text-gray-600" />
                   <h3 className="text-xl font-semibold mb-2 text-white">Stream Not Available</h3>
@@ -195,7 +195,7 @@ const Anime_Player = () => {
             ) : (
               <iframe
                 src={streamUrl}
-                className="w-full h-full border-0 rounded-t-2xl"
+                className="w-full border-0 rounded-t-2xl"
                 allowFullScreen
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
@@ -205,7 +205,12 @@ const Anime_Player = () => {
                 referrerPolicy="origin"
                 frameBorder="0"
                 scrolling="no"
-                style={{ width: '100%', height: '100%', minHeight: '400px' }}
+                style={{ 
+                  height: '70vh',
+                  minHeight: '400px',
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden'
+                }}
               />
             )}
           </div>

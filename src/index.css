@@ -56,13 +56,17 @@
 
 iframe{
   height: 80vh;
-  width: 85vw;
+  width: 100%;
+  /* Performance optimizations for smooth playback */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: auto;
 }
 
 @media screen and (max-width: 768px) {
   iframe{
     height: 50vh;
-    width: 90vw;
+    width: 100%;
   }
   
 }
@@ -70,7 +74,7 @@ iframe{
 @media screen and (min-width: 1024px) {
   iframe{
     height: 70vh;
-    width: 83.5vw;
+    width: 100%;
   }
   
 }
