@@ -26,12 +26,12 @@ const AppContent = () => {
   const navigate = useNavigate();
 
   // Initialize console filtering for third-party spam
-  useEffect(() => {
-    const cleanupConsoleFilter = initializeConsoleFilter();
+  // useEffect(() => {
+  //   const cleanupConsoleFilter = initializeConsoleFilter();
     
-    // Cleanup function to restore original console methods
-    return cleanupConsoleFilter;
-  }, []);
+  //   // Cleanup function to restore original console methods
+  //   return cleanupConsoleFilter;
+  // }, []);
 
   useEffect(() => {
     const notificationCount = parseInt(localStorage.getItem('animeNotificationCount') || '0', 10);

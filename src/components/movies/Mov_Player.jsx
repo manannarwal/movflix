@@ -6,20 +6,31 @@ import { HiOutlineServerStack } from "react-icons/hi2";
 const Mov_Player = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [selectedServer, setSelectedServer] = useState("vidlink");
+  const [selectedServer, setSelectedServer] = useState("vidsrc1");
   const [isLoading, setIsLoading] = useState(true);
   const [movieData, setMovieData] = useState(null);
 
   const serverOptions = [
-    { value: "vidlink", label: "Primary Server"},
-    { value: "vidsrc1", label: "Secondary Server" },
-    { value: "vidsrc2", label: "Backup Server"},
+    { value: "vidsrc1", label: "Server1"},
+    { value: "vidsrc2", label: "Server2"},
+    { value: "vidsrc3", label: "Server3"},
+    { value: "vidsrc4", label: "Server4"},
+    { value: "vidsrc5", label: "Server5"},
+    { value: "vidsrc6", label: "Server6"},
+    { value: "vidsrc7", label: "Server7"},
+    { value: "vidsrc8", label: "Server8"},
   ];
 
   const serverUrls = {
-    vidlink: `https://vidlink.pro/movie/${id}`,
-    vidsrc1: `https://vidsrc.in/embed/movie?tmdb=${id}`,
-    vidsrc2: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1`,
+    vidsrc1: `https://vidlink.pro/movie/${id}`,
+    vidsrc2: `https://vidsrc.in/embed/movie?tmdb=${id}`,
+    vidsrc3: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1`, //Multi Embeds
+    vidsrc4: `https://player.videasy.net/movie/${id}`, //Multi Languages
+    vidsrc5: `https://vidsrc.wtf/api/1/movie/?id=${id}`,
+    vidsrc6: `https://vidsrc.wtf/api/3/movie/?id=${id}`, //Multi Embeds
+    vidsrc7: `https://moviesapi.club/movie/${id}`,
+    vidsrc8: `https://player.vidify.top/embed/movie/${id}`,
+
   };
 
   // Fetch movie details
@@ -40,6 +51,8 @@ const Mov_Player = () => {
   }, [id]);
 
   const handleServerChange = (server) => {
+    console.log('Changing to server:', server);
+    console.log('New URL will be:', serverUrls[server]);
     setIsLoading(true);
     setSelectedServer(server);
   };
@@ -49,17 +62,22 @@ const Mov_Player = () => {
   };
 
   const handleIframeError = () => {
-    // Silently handle iframe errors from third-party content
+    // Debug: Log iframe errors instead of silently handling them
+    console.log('Iframe error detected for server:', selectedServer);
+    console.log('URL that failed:', serverUrls[selectedServer]);
     setIsLoading(false);
   };
 
-  // Suppress third-party console errors
+  // Temporarily disable error suppression for debugging
   useEffect(() => {
     const handleError = (event) => {
-      // Suppress errors from third-party iframe sources
+      // Log errors instead of suppressing them for debugging
       if (event.target && event.target.tagName === 'IFRAME') {
-        event.preventDefault();
-        event.stopPropagation();
+        console.log('Iframe loading error:', event);
+        console.log('Failed URL:', event.target.src);
+        // Comment out suppression for debugging
+        // event.preventDefault();
+        // event.stopPropagation();
       }
     };
 
@@ -121,6 +139,8 @@ const Mov_Player = () => {
               onError={handleIframeError}
               title={`Movie Player - ${movieData?.title || 'Loading...'}`}
               referrerPolicy="no-referrer"
+              allow="encrypted-media"
+              frameBorder="0"
             />
           </div>
 
@@ -133,21 +153,22 @@ const Mov_Player = () => {
                 <span className="font-medium max-md:text-sm">Server:</span>
               </div>
               
-              <div className="flex flex-wrap gap-2 max-md:gap-1.5">
-                {serverOptions.map((server) => (
-                  <button
-                    key={server.value}
-                    onClick={() => handleServerChange(server.value)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 border max-md:px-3 max-md:py-1.5 max-md:text-sm ${
-                      selectedServer === server.value
-                        ? 'bg-white/20 border-white/30 text-white'
-                        : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/10 hover:border-white/20'
-                    }`}
-                  >
-                    <span className="font-medium">{server.label}</span>
-                  </button>
-                ))}
-              </div>
+              <select
+                value={selectedServer}
+                onChange={(e) => handleServerChange(e.target.value)}
+                className="bg-white/10 border border-white/20 text-white px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/30 transition-all duration-300 max-md:px-3 max-md:py-1.5 max-md:text-sm"
+              >
+                <optgroup label="Available Servers" className="bg-gray-700">
+                  <option value="vidsrc1">Server1</option>
+                  <option value="vidsrc2">Server2</option>
+                  <option value="vidsrc3">Server3</option>
+                  <option value="vidsrc4">Server4</option>
+                  <option value="vidsrc5">Server5</option>
+                  <option value="vidsrc6">Server6</option>
+                  <option value="vidsrc7">Server7</option>
+                  <option value="vidsrc8">Server8</option>
+                </optgroup>
+              </select>
             </div>
 
             {/* Movie Information */}

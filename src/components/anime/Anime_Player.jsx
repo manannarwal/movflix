@@ -198,7 +198,6 @@ const Anime_Player = () => {
                 className="w-full border-0 rounded-t-2xl"
                 allowFullScreen
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
                 onLoad={handleIframeLoad}
                 onError={handleIframeError}
                 title={`${animeData?.title || 'Anime'} - Episode ${selectedEpisode}`}

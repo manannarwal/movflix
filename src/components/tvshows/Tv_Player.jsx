@@ -11,20 +11,28 @@ const Tv_Player = () => {
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [episodes, setEpisodes] = useState([]);
   const [selectedEpisode, setSelectedEpisode] = useState(1);
-  const [selectedServer, setSelectedServer] = useState("vidlink");
+  const [selectedServer, setSelectedServer] = useState("vidsrc1");
   const [isLoading, setIsLoading] = useState(true);
   const [showData, setShowData] = useState(null);
 
   const serverOptions = [
-    { value: "vidlink", label: "Primary Server"},
-    { value: "vidsrc1", label: "Secondary Server"},
-    { value: "vidsrc2", label: "Backup Server"},
+    { value: "vidsrc1", label: "Server1"},
+    { value: "vidsrc2", label: "Server2"},
+    { value: "vidsrc3", label: "Server3"},
+    { value: "vidsrc4", label: "Server4"},
+    { value: "vidsrc5", label: "Server5"},
+    { value: "vidsrc6", label: "Server6"},
+    { value: "vidsrc7", label: "Server7"},
   ];
 
   const serverUrls = {
-    vidlink: `https://vidlink.pro/tv/${id}/${selectedSeason}/${selectedEpisode}`,
-    vidsrc1: `https://vidsrc.in/embed/tv?tmdb=${id}&season=${selectedSeason}&episode=${selectedEpisode}`,
-    vidsrc2: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${selectedSeason}&e=${selectedEpisode}`,
+    vidsrc1: `https://vidlink.pro/tv/${id}/${selectedSeason}/${selectedEpisode}`,
+    vidsrc2: `https://vidsrc.in/embed/tv?tmdb=${id}&season=${selectedSeason}&episode=${selectedEpisode}`,
+    vidsrc3: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${selectedSeason}&e=${selectedEpisode}`,
+    vidsrc4: `https://player.videasy.net/tv/${id}/${selectedSeason}/${selectedEpisode}`, //Multi Languages
+    vidsrc5: `https://vidsrc.wtf/api/1/tv/?id=${id}&s=${selectedSeason}&e=${selectedEpisode}`,
+    vidsrc6: `https://vidsrc.wtf/api/3/tv/?id=${id}&s=${selectedSeason}&e=${selectedEpisode}`, //Multi Embeds
+    vidsrc7: `https://moviesapi.club/tv/${id}-${selectedSeason}-${selectedEpisode}`,
   };
 
   // Load saved state from localStorage
@@ -267,21 +275,21 @@ const Tv_Player = () => {
                 <span className="font-medium max-md:text-sm">Server:</span>
               </div>
               
-              <div className="flex flex-wrap gap-2 max-md:gap-1.5">
-                {serverOptions.map((server) => (
-                  <button
-                    key={server.value}
-                    onClick={() => handleServerChange(server.value)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 border max-md:px-3 max-md:py-1.5 max-md:text-sm ${
-                      selectedServer === server.value
-                        ? 'bg-white/20 border-white/30 text-white'
-                        : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/10 hover:border-white/20'
-                    }`}
-                  >
-                    <span className="font-medium">{server.label}</span>
-                  </button>
-                ))}
-              </div>
+              <select
+                value={selectedServer}
+                onChange={(e) => handleServerChange(e.target.value)}
+                className="bg-white/10 border border-white/20 text-white px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/30 transition-all duration-300 max-md:px-3 max-md:py-1.5 max-md:text-sm"
+              >
+                <optgroup label="Available Servers" className="bg-gray-700">
+                  <option value="vidsrc1">Server1</option>
+                  <option value="vidsrc2">Server2</option>
+                  <option value="vidsrc3">Server3</option>
+                  <option value="vidsrc4">Server4</option>
+                  <option value="vidsrc5">Server5</option>
+                  <option value="vidsrc6">Server6</option>
+                  <option value="vidsrc7">Server7</option>
+                </optgroup>
+              </select>
             </div>
 
             {/* Show Information */}
