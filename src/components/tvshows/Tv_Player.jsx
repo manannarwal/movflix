@@ -23,16 +23,28 @@ const Tv_Player = () => {
     { value: "vidsrc5", label: "Server5"},
     { value: "vidsrc6", label: "Server6"},
     { value: "vidsrc7", label: "Server7"},
+    { value: "vidsrc8", label: "Server8"},
+    { value: "vidsrc9", label: "Server9"},
+    { value: "vidsrc10", label: "Server10"},
+    { value: "vidsrc11", label: "Server11"},
+    { value: "vidsrc12", label: "Server12"},
+    { value: "vidsrc13", label: "Server13"}
   ];
 
   const serverUrls = {
     vidsrc1: `https://vidlink.pro/tv/${id}/${selectedSeason}/${selectedEpisode}`,
     vidsrc2: `https://vidsrc.in/embed/tv?tmdb=${id}&season=${selectedSeason}&episode=${selectedEpisode}`,
-    vidsrc3: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${selectedSeason}&e=${selectedEpisode}`,
-    vidsrc4: `https://player.videasy.net/tv/${id}/${selectedSeason}/${selectedEpisode}`, //Multi Languages
-    vidsrc5: `https://vidsrc.wtf/api/1/tv/?id=${id}&s=${selectedSeason}&e=${selectedEpisode}`,
-    vidsrc6: `https://vidsrc.wtf/api/3/tv/?id=${id}&s=${selectedSeason}&e=${selectedEpisode}`, //Multi Embeds
-    vidsrc7: `https://moviesapi.club/tv/${id}-${selectedSeason}-${selectedEpisode}`,
+    vidsrc3: `https://vidsrc.wtf/api/1/tv/?id=${id}&s=${selectedSeason}&e=${selectedEpisode}`,
+    vidsrc4: `https://moviesapi.club/tv/${id}-${selectedSeason}-${selectedEpisode}`,
+    vidsrc5: `https://vidsrc.cc/v2/embed/tv/${id}/${selectedSeason}/${selectedEpisode}`,
+    vidsrc6: `https://player.videasy.net/tv/${id}/${selectedSeason}/${selectedEpisode}`, //Multi Languages
+    vidsrc7: `https://player.vidify.top/embed/tv/${id}/${selectedSeason}/${selectedEpisode}`, //Multi Languages
+    vidsrc8: `https://vidnest.fun/tv/${id}/${selectedSeason}/${selectedEpisode}`, //Multi Languages
+    vidsrc9: `https://player.vidplus.to/embed/tv/${id}/${selectedSeason}/${selectedEpisode}`, //Multi Languages
+    vidsrc10: `https://rivestream.net/embed?type=tv&id=${id}&season=${selectedSeason}&episode=${selectedEpisode}`, //Multi Languages
+    vidsrc11: `https://vidsrc.wtf/api/3/tv/?id=${id}&s=${selectedSeason}&e=${selectedEpisode}`, //Multi Embeds
+    vidsrc12: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${selectedSeason}&e=${selectedEpisode}`, //Multi Embeds
+    vidsrc13: `https://111movies.com/tv/${id}/${selectedSeason}/${selectedEpisode}`, //Multi Embeds
   };
 
   // Load saved state from localStorage
@@ -280,14 +292,27 @@ const Tv_Player = () => {
                 onChange={(e) => handleServerChange(e.target.value)}
                 className="bg-white/10 border border-white/20 text-white px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/30 transition-all duration-300 max-md:px-3 max-md:py-1.5 max-md:text-sm"
               >
-                <optgroup label="Available Servers" className="bg-gray-700">
+                <optgroup label="Normal Servers" className="bg-gray-700">
                   <option value="vidsrc1">Server1</option>
                   <option value="vidsrc2">Server2</option>
                   <option value="vidsrc3">Server3</option>
                   <option value="vidsrc4">Server4</option>
                   <option value="vidsrc5">Server5</option>
+                </optgroup>
+                <optgroup
+                  label="Multi Language Servers"
+                  className="bg-gray-700"
+                >
                   <option value="vidsrc6">Server6</option>
                   <option value="vidsrc7">Server7</option>
+                  <option value="vidsrc8">Server8</option>
+                  <option value="vidsrc9">Server9</option>
+                  <option value="vidsrc10">Server10</option>
+                </optgroup>
+                <optgroup label="Multi Embed Servers" className="bg-gray-700">
+                  <option value="vidsrc11">Server11</option>
+                  <option value="vidsrc12">Server12</option>
+                  <option value="vidsrc13">Server13</option>
                 </optgroup>
               </select>
             </div>
