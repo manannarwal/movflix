@@ -257,7 +257,7 @@ const Anime_Player = () => {
                   <button
                     key={option.value}
                     onClick={() => handleLanguageChange(option.value)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 border max-md:px-3 max-md:py-1.5 max-md:text-sm ${
+                    className={`flex items-center gap-2 px-4 py-2 rounded-border max-md:px-3xl transition-all duration-300 border max-md:px-3 max-md:py-1.5 max-md:text-sm ${
                       selectedLanguage === option.value
                         ? 'bg-white/20 border-white/30 text-white'
                         : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/10 hover:border-white/20'
