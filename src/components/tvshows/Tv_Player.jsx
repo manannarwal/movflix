@@ -33,7 +33,7 @@ const Tv_Player = () => {
 
   const serverUrls = {
     vidsrc1: `https://vidlink.pro/tv/${id}/${selectedSeason}/${selectedEpisode}`,
-    vidsrc2: `https://vidsrc.in/embed/tv?tmdb=${id}&season=${selectedSeason}&episode=${selectedEpisode}`,
+    vidsrc2: `https://vidsrcme.su/embed/tv?tmdb=${id}&season=${selectedSeason}&episode=${selectedEpisode}`,
     vidsrc3: `https://vidsrc.wtf/api/1/tv/?id=${id}&s=${selectedSeason}&e=${selectedEpisode}`,
     vidsrc4: `https://moviesapi.club/tv/${id}-${selectedSeason}-${selectedEpisode}`,
     vidsrc5: `https://vidsrc.cc/v2/embed/tv/${id}/${selectedSeason}/${selectedEpisode}`,
