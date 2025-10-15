@@ -28,7 +28,7 @@ const Mov_Player = () => {
 
   const serverUrls = {
     vidsrc1: `https://vidlink.pro/movie/${id}`,
-    vidsrc2: `https://vidsrc.in/embed/movie?tmdb=${id}`,
+    vidsrc2: `https://vidsrcme.su/embed/movie?tmdb=${id}`,
     vidsrc3: `https://vidsrc.wtf/api/1/movie/?id=${id}`,
     vidsrc4: `https://moviesapi.club/movie/${id}`,
     vidsrc5: `https://vidsrc.cc/v2/embed/movie/${id}`,
