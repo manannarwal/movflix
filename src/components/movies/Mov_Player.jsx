@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { MdArrowBack, MdPlayArrow, MdFullscreen } from "react-icons/md";
 import { HiOutlineServerStack } from "react-icons/hi2";
+import { getPlayerUrl } from "../../utils/playerUrlManager";
 
 const Mov_Player = () => {
   const { id } = useParams();
@@ -9,38 +10,20 @@ const Mov_Player = () => {
   const [selectedServer, setSelectedServer] = useState("vidsrc1");
   const [isLoading, setIsLoading] = useState(true);
   const [movieData, setMovieData] = useState(null);
+  const [playerUrl, setPlayerUrl] = useState("");
 
-  const serverOptions = [
-    { value: "vidsrc1", label: "Server1" },
-    { value: "vidsrc2", label: "Server2" },
-    { value: "vidsrc3", label: "Server3" },
-    { value: "vidsrc4", label: "Server4" },
-    { value: "vidsrc5", label: "Server5" },
-    { value: "vidsrc6", label: "Server6" },
-    { value: "vidsrc7", label: "Server7" },
-    { value: "vidsrc8", label: "Server8" },
-    { value: "vidsrc9", label: "Server9" },
-    { value: "vidsrc10", label: "Server10" },
-    { value: "vidsrc11", label: "Server11" },
-    { value: "vidsrc12", label: "Server12" },
-    { value: "vidsrc13", label: "Server13" },
-  ];
-
-  const serverUrls = {
-    vidsrc1: `https://vidlink.pro/movie/${id}`,
-    vidsrc2: `https://vidsrcme.su/embed/movie?tmdb=${id}`,
-    vidsrc3: `https://vidsrc.wtf/api/1/movie/?id=${id}`,
-    vidsrc4: `https://moviesapi.club/movie/${id}`,
-    vidsrc5: `https://vidsrc.cc/v2/embed/movie/${id}`,
-    vidsrc6: `https://player.videasy.net/movie/${id}`, //Multi Languages
-    vidsrc7: `https://player.vidify.top/embed/movie/${id}`, //Multi Languages
-    vidsrc8: `https://vidnest.fun/movie/${id}`, //Multi Languages
-    vidsrc9: `https://player.vidplus.to/embed/movie/${id}`, //Multi Languages
-    vidsrc10: `https://rivestream.net/embed?type=movie&id=${id}`, //Multi Languages
-    vidsrc11: `https://vidsrc.wtf/api/3/movie/?id=${id}`, //Multi Embeds
-    vidsrc12: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1`, //Multi Embeds
-    vidsrc13: `https://111movies.com/movie/${id}`, //Multi Embeds
-  };
+  // Fetch player URL from backend/local
+  useEffect(() => {
+    const fetchPlayerUrl = async () => {
+      try {
+        const url = await getPlayerUrl("movie", id, selectedServer);
+        setPlayerUrl(url);
+      } catch (error) {
+        console.error("Error fetching player URL:", error);
+      }
+    };
+    fetchPlayerUrl();
+  }, [id, selectedServer]);
 
   // Fetch movie details
   useEffect(() => {
@@ -60,9 +43,6 @@ const Mov_Player = () => {
   }, [id]);
 
   const handleServerChange = (server) => {
-    console.log("Changing to server:", server);
-    console.log("New URL will be:", serverUrls[server]);
-    setIsLoading(true);
     setSelectedServer(server);
   };
 
@@ -71,28 +51,8 @@ const Mov_Player = () => {
   };
 
   const handleIframeError = () => {
-    // Debug: Log iframe errors instead of silently handling them
-    console.log("Iframe error detected for server:", selectedServer);
-    console.log("URL that failed:", serverUrls[selectedServer]);
     setIsLoading(false);
   };
-
-  // Temporarily disable error suppression for debugging
-  useEffect(() => {
-    const handleError = (event) => {
-      // Log errors instead of suppressing them for debugging
-      if (event.target && event.target.tagName === "IFRAME") {
-        console.log("Iframe loading error:", event);
-        console.log("Failed URL:", event.target.src);
-        // Comment out suppression for debugging
-        // event.preventDefault();
-        // event.stopPropagation();
-      }
-    };
-
-    window.addEventListener("error", handleError, true);
-    return () => window.removeEventListener("error", handleError, true);
-  }, []);
 
   return (
     <div className="min-h-screen ml-4 mb-4 mr-3 overflow-hidden max-md:-ml-10 max-md:mb-2">
@@ -135,7 +95,7 @@ const Mov_Player = () => {
             )}
 
             <iframe
-              src={serverUrls[selectedServer]}
+              src={playerUrl}
               className="border-0 rounded-t-2xl w-full"
               style={{
                 height: "70vh",
@@ -187,7 +147,6 @@ const Mov_Player = () => {
                 <optgroup label="Multi Embed Servers" className="bg-gray-700">
                   <option value="vidsrc11">Server11</option>
                   <option value="vidsrc12">Server12</option>
-                  <option value="vidsrc13">Server13</option>
                 </optgroup>
               </select>
             </div>

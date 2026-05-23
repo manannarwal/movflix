@@ -1,20 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAnimeInfoById, getApiUrl } from "../../utils/aniwatchApi";
+import { fetchAnilistTrending } from "../../utils/anilistApi";
 
 // Helper function to fetch with CORS handling
-const fetchWithCORS = async (url) => {
-  if (import.meta.env.PROD) {
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-    const response = await fetch(proxyUrl);
-    const data = await response.json();
-    return JSON.parse(data.contents);
-  } else {
-    const response = await fetch(url);
-    return await response.json();
-  }
-};
-
 const AnimeSlider = () => {
   const [animes, setAnimes] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -26,41 +14,17 @@ const AnimeSlider = () => {
   const startXRef = useRef(0);
   const draggingRef = useRef(false);
 
-  // Fetch top airing anime
+  // Fetch trending anime
   useEffect(() => {
-    const fetchTopAiringAnime = async () => {
+    const fetchTrendingAnime = async () => {
       try {
-        const data = await fetchWithCORS(getApiUrl('/category/top-airing?page=1'));
-        
-        if (data.status === 200 && data.data.animes) {
-          const sliced = data.data.animes.slice(0, 6); // Use only 6 anime
-          
-          // Fetch detailed info for each anime to get descriptions
-          const animesWithDetails = await Promise.all(
-            sliced.map(async (anime) => {
-              try {
-                const detailedInfo = await getAnimeInfoById(anime.id);
-                return {
-                  ...anime,
-                  description: detailedInfo.description || 'No description available'
-                };
-              } catch (error) {
-                console.error(`Error fetching details for anime ${anime.id}:`, error);
-                return {
-                  ...anime,
-                  description: 'Description unavailable'
-                };
-              }
-            })
-          );
-          
-          setAnimes(animesWithDetails);
-        }
+        const trendingAnimes = await fetchAnilistTrending();
+        setAnimes(trendingAnimes.slice(0, 6)); // Use only 6 anime
       } catch (error) {
-        console.error("Error fetching top airing anime:", error);
+        console.error("Error fetching trending anime:", error);
       }
     };
-    fetchTopAiringAnime();
+    fetchTrendingAnime();
   }, []);
 
   // Auto-slide every 5 seconds
@@ -147,7 +111,7 @@ const AnimeSlider = () => {
       <div
         className="absolute filter blur-sm max-md:blur-none inset-0 bg-cover bg-center transition-all duration-700 ease-in-out"
         style={{
-          backgroundImage: `url(${currentAnime?.poster || ''})`,
+          backgroundImage: `url(${currentAnime?.cover || currentAnime?.image || ''})`,
           transform: `translateX(${dragOffset}px)`,
         }}
       >
@@ -161,38 +125,13 @@ const AnimeSlider = () => {
         <div className="ml-8 max-w-2xl max-md:ml-4 max-md:max-w-xs">
           {/* Anime Title */}
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 max-md:text-2xl leading-tight drop-shadow-2xl">
-            {currentAnime?.name || 'Loading...'}
+            {currentAnime?.title || 'Loading...'}
           </h1>
-
-          {/* Anime Info */}
-          <div className="flex items-center gap-4 mb-4 max-md:gap-2 max-md:mb-3">
-            {currentAnime?.episodes && (
-              <span className="bg-zinc-600 text-gray-300 px-3 py-1 rounded-full text-sm font-medium">
-                Episodes: {typeof currentAnime.episodes === 'object' 
-                  ? (currentAnime.episodes.sub || currentAnime.episodes.dub || 'N/A')
-                  : currentAnime.episodes}
-              </span>
-            )}
-            {currentAnime?.aired?.from && (
-              <span className="text-gray-200 text-sm">
-                Aired: {formatAiringDate(currentAnime.aired.from)}
-              </span>
-            )}
-          </div>
-
-          {/* Description */}
-          {currentAnime?.description && (
-            <p className="text-gray-400 line-clamp-3 w-[90%] max-md:w-70 max-md:-ml-15 max-md:-mb-10 max-md:text-xs">
-              {currentAnime.description.length > 400
-                ? `${currentAnime.description.substring(0, 400)}...`
-                : currentAnime.description}
-            </p>
-          )}
 
           {/* Watch Now Button */}
           <button
             onClick={() => handleAnimeClick(currentAnime?.id)}
-            className="bg-zinc-800/70 mt-6 px-6 py-3 text-lg font-semibold rounded-3xl font-sans hover:bg-[#303030]/80 transition-all max-md:mt-12 max-md:-ml-15 max-md:px-12 max-md:py-2 max-md:text-xs max-md:"
+            className="bg-zinc-800/70 mt-6 px-6 py-3 text-lg font-semibold rounded-3xl font-sans hover:bg-[#303030]/80 transition-all max-md:mt-12 max-md:-ml-15 max-md:px-12 max-md:py-2 max-md:text-xs"
           >
             ▶ Watch Now
           </button>
@@ -200,10 +139,10 @@ const AnimeSlider = () => {
 
         {/* Anime Poster on Right */}
         <div className="mr-42 max-md:hidden">
-          <div 
+          <div
             className="w-70 h-105 bg-cover bg-center rounded-sm transform rotate-10"
             style={{
-              backgroundImage: `url(${currentAnime?.poster || ''})`,
+              backgroundImage: `url(${currentAnime?.image || ''})`,
             }}
           />
         </div>

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { MdArrowBack, MdPlayArrow, MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import { HiOutlineServerStack } from "react-icons/hi2";
 import { BiSolidMoviePlay } from "react-icons/bi";
+import { getPlayerUrl } from "../../utils/playerUrlManager";
 
 const Tv_Player = () => {
   const { id } = useParams();
@@ -14,38 +15,7 @@ const Tv_Player = () => {
   const [selectedServer, setSelectedServer] = useState("vidsrc1");
   const [isLoading, setIsLoading] = useState(true);
   const [showData, setShowData] = useState(null);
-
-  const serverOptions = [
-    { value: "vidsrc1", label: "Server1"},
-    { value: "vidsrc2", label: "Server2"},
-    { value: "vidsrc3", label: "Server3"},
-    { value: "vidsrc4", label: "Server4"},
-    { value: "vidsrc5", label: "Server5"},
-    { value: "vidsrc6", label: "Server6"},
-    { value: "vidsrc7", label: "Server7"},
-    { value: "vidsrc8", label: "Server8"},
-    { value: "vidsrc9", label: "Server9"},
-    { value: "vidsrc10", label: "Server10"},
-    { value: "vidsrc11", label: "Server11"},
-    { value: "vidsrc12", label: "Server12"},
-    { value: "vidsrc13", label: "Server13"}
-  ];
-
-  const serverUrls = {
-    vidsrc1: `https://vidlink.pro/tv/${id}/${selectedSeason}/${selectedEpisode}`,
-    vidsrc2: `https://vidsrcme.su/embed/tv?tmdb=${id}&season=${selectedSeason}&episode=${selectedEpisode}`,
-    vidsrc3: `https://vidsrc.wtf/api/1/tv/?id=${id}&s=${selectedSeason}&e=${selectedEpisode}`,
-    vidsrc4: `https://moviesapi.club/tv/${id}-${selectedSeason}-${selectedEpisode}`,
-    vidsrc5: `https://vidsrc.cc/v2/embed/tv/${id}/${selectedSeason}/${selectedEpisode}`,
-    vidsrc6: `https://player.videasy.net/tv/${id}/${selectedSeason}/${selectedEpisode}`, //Multi Languages
-    vidsrc7: `https://player.vidify.top/embed/tv/${id}/${selectedSeason}/${selectedEpisode}`, //Multi Languages
-    vidsrc8: `https://vidnest.fun/tv/${id}/${selectedSeason}/${selectedEpisode}`, //Multi Languages
-    vidsrc9: `https://player.vidplus.to/embed/tv/${id}/${selectedSeason}/${selectedEpisode}`, //Multi Languages
-    vidsrc10: `https://rivestream.net/embed?type=tv&id=${id}&season=${selectedSeason}&episode=${selectedEpisode}`, //Multi Languages
-    vidsrc11: `https://vidsrc.wtf/api/3/tv/?id=${id}&s=${selectedSeason}&e=${selectedEpisode}`, //Multi Embeds
-    vidsrc12: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${selectedSeason}&e=${selectedEpisode}`, //Multi Embeds
-    vidsrc13: `https://111movies.com/tv/${id}/${selectedSeason}/${selectedEpisode}`, //Multi Embeds
-  };
+  const [playerUrl, setPlayerUrl] = useState("");
 
   // Load saved state from localStorage
   useEffect(() => {
@@ -64,6 +34,21 @@ const Tv_Player = () => {
       episode: selectedEpisode,
     }));
   }, [id, selectedSeason, selectedEpisode]);
+
+  // Fetch player URL from backend/local
+  useEffect(() => {
+    const fetchPlayerUrl = async () => {
+      try {
+        const url = await getPlayerUrl("tv", id, selectedServer, selectedSeason, selectedEpisode);
+        setPlayerUrl(url);
+      } catch (error) {
+        console.error("Error fetching player URL:", error);
+      }
+    };
+    if (selectedSeason && selectedEpisode) {
+      fetchPlayerUrl();
+    }
+  }, [id, selectedSeason, selectedEpisode, selectedServer]);
 
   // Fetch show details and seasons
   useEffect(() => {
@@ -113,7 +98,6 @@ const Tv_Player = () => {
   }, [id, selectedSeason]);
 
   const handleServerChange = (server) => {
-    setIsLoading(true);
     setSelectedServer(server);
   };
 
@@ -122,7 +106,6 @@ const Tv_Player = () => {
   };
 
   const handleIframeError = () => {
-    // Silently handle iframe errors from third-party content
     setIsLoading(false);
   };
 
@@ -203,7 +186,7 @@ const Tv_Player = () => {
             )}
             
             <iframe
-              src={serverUrls[selectedServer]}
+              src={playerUrl}
               className="border-0 rounded-t-2xl w-full"
               style={{ 
                 height: '70vh',
@@ -312,7 +295,11 @@ const Tv_Player = () => {
                 <optgroup label="Multi Embed Servers" className="bg-gray-700">
                   <option value="vidsrc11">Server11</option>
                   <option value="vidsrc12">Server12</option>
-                  <option value="vidsrc13">Server13</option>
+                  {/* <option value="vidsrc12">Server11</option> */}
+                  {/* <option value="vidsrc14">Server13</option> */}
+                  
+                  
+
                 </optgroup>
               </select>
             </div>

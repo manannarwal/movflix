@@ -1,18 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getApiUrl } from "../../utils/aniwatchApi";
-
-// Helper function to fetch with CORS handling
-const fetchWithCORS = async (url) => {
-  if (import.meta.env.PROD) {
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-    const response = await fetch(proxyUrl);
-    const data = await response.json();
-    return JSON.parse(data.contents);
-  } else {
-    const response = await fetch(url);
-    return await response.json();
-  }
-};
+import { searchAnilist } from "../../utils/anilistApi";
 
 const AnimeSearchFetch = ({ query, onResults, onSelect }) => {
   const [results, setResults] = useState([]);
@@ -28,24 +15,11 @@ const AnimeSearchFetch = ({ query, onResults, onSelect }) => {
 
       setLoading(true);
       try {
-        // Use the same Aniwatch API that the homepage uses
-        const data = await fetchWithCORS(getApiUrl(`/search?q=${encodeURIComponent(query)}`));
+        const formattedResults = await searchAnilist(query);
         
-        if (data.status === 200 && data.data.animes) {
-          const formattedResults = data.data.animes.map(anime => ({
-            id: anime.id, // This will be the Aniwatch ID, same as homepage cards
-            title: anime.name,
-            image: anime.poster,
-            rating: anime.rating || "N/A",
-            media_type: "anime"
-          }));
-          
-          setResults(formattedResults);
-          onResults(formattedResults);
-        } else {
-          setResults([]);
-          onResults([]);
-        }
+        setResults(formattedResults);
+        onResults(formattedResults);
+
       } catch (error) {
         console.error("Error searching anime:", error);
         setResults([]);
@@ -100,7 +74,7 @@ const AnimeSearchFetch = ({ query, onResults, onSelect }) => {
               {anime.title}
             </h3>
             <p className="text-gray-400 text-xs">
-              Anime • Rating: {anime.rating}
+              Anime
             </p>
           </div>
         </div>

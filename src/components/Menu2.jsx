@@ -61,11 +61,6 @@ const Menu2 = () => {
             <GiNinjaHead className="my-1" />
             <span className="ml-5 flex items-center gap-2">
               Anime
-              <span className="relative">
-                <span className="absolute -top-1.5 -right-7 text-[11px] font-bold text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text animate-pulse">
-                  NEW
-                </span>
-              </span>
             </span>
           </p>
         </Link>
